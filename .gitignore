@@ -1,0 +1,57 @@
+# Игнорировать временные и большие бинарные файлы
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtualenvs
+venv/
+env/
+.venv/
+
+# IDE / Editor
+.vscode/
+.vs/
+
+# Build outputs
+**/bin/
+**/obj/
+build/
+dist/
+
+# Python packaging
+*.egg-info/
+pip-wheel-metadata/
+*.egg
+
+# Large data, models, artifacts
+artifacts/
+artifacts/**
+rocket-builder-ml-*/
+*.pt
+*.pth
+*.h5
+*.onnx
+*.ckpt
+
+# Dataset / generated data
+data/
+data/**
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CUDA local builds or folders inside repo
+cuda/
+cuda-*
+nvcc.out
+
+# Archives
+*.zip
+*.tar.gz
+*.tar
+*.rar
