@@ -55,3 +55,25 @@ nvcc.out
 *.tar.gz
 *.tar
 *.rar
+
+# Additional large/OS/library files
+cudatoolkit/
+*.cubin
+*.ptx
+
+# Native libraries and large binaries
+*.dll
+*.so
+*.dylib
+
+# IDE
+.idea/
+
+# Temporary
+*.tmp
+*.swp
+
+# If you need to store large model or binary files in the repo, consider Git LFS:
+#   git lfs install
+#   git lfs track "*.pt"
+# Then commit the generated .gitattributes file instead of ignoring tracked patterns.
