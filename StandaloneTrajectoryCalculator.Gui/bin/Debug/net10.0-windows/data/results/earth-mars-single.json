@@ -1,0 +1,125 @@
+{
+  "mode": "porkchop",
+  "calendar": {
+    "epochYear": 2000,
+    "epochDayOfYear": 1,
+    "daysPerYear": 365,
+    "hoursPerDay": 24,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60,
+    "usesUtcFormatting": true,
+    "epochUtc": "2000-01-01T12:00:00+00:00",
+    "secondsPerHour": 3600,
+    "secondsPerDay": 86400,
+    "secondsPerYear": 31536000
+  },
+  "centralBody": {
+    "name": "Sun",
+    "gravitationalParameter": 1.3271244004127942E+20
+  },
+  "window": {
+    "departureStart": 838814400,
+    "departureEnd": 946900800,
+    "travelTimeMin": 10368000,
+    "travelTimeMax": 43200000,
+    "departureSteps": 80,
+    "travelTimeSteps": 80
+  },
+  "validPoints": 6400,
+  "invalidPoints": 0,
+  "hohmannTimeOfFlight": 22366448.37089322,
+  "synodicPeriod": 67385153.2512926,
+  "bestTransfer": {
+    "originName": "Mars",
+    "destinationName": "Earth",
+    "departureTime": 905855331.6455696,
+    "travelTime": 21589063.291139238,
+    "longWay": false,
+    "originPositionAtDeparture": {
+      "x": -37011725953.27388,
+      "y": 235012190200.93604,
+      "z": 5826196318.321341
+    },
+    "destinationPositionAtArrival": {
+      "x": -72079480940.62766,
+      "y": -133202845733.68301,
+      "z": 10865509.048950326
+    },
+    "originVelocity": {
+      "x": -23020.097334743656,
+      "y": -1711.0086844365612,
+      "z": 530.6748102478682
+    },
+    "transferInitialVelocity": {
+      "x": -20353.05904837666,
+      "y": -1519.1880497008256,
+      "z": 695.4814113929999
+    },
+    "transferFinalVelocity": {
+      "x": 30775.57438894578,
+      "y": -10267.147580160132,
+      "z": -1292.6611201447631
+    },
+    "destinationVelocity": {
+      "x": 25713.79997189692,
+      "y": -14289.238874631605,
+      "z": 0.939972265288453
+    },
+    "originVesselOrbitalSpeed": 3454.210599402269,
+    "destinationVesselOrbitalSpeed": 12913.756379515837,
+    "originBodyRadius": 3389500,
+    "originOrbitPeriapsisRadius": 3589500,
+    "originOrbitApoapsisRadius": 3589500,
+    "ejectionDeltaVector": {
+      "x": 2111.570624349153,
+      "y": 151.8698923530387,
+      "z": 130.48210798313278
+    },
+    "injectionDeltaVector": {
+      "x": 0,
+      "y": 0,
+      "z": -0
+    },
+    "phaseAngle": -1.8627158851854855,
+    "transferAngle": 2.488987464379793,
+    "departureSeparation": 1.8627158851854855,
+    "ejectionInclination": 0.06155678624904278,
+    "insertionInclination": -0.1974790816491927,
+    "ejectionDVNormal": 341.91900777852794,
+    "ejectionDVPrograde": 2093.301683570971,
+    "ejectionHeading": 1.4088865556091488,
+    "ejectionAngle": 2.2553027183199594,
+    "ejectionAngleIsRetrograde": true,
+    "hasDetailedEjectionAnalysis": true,
+    "arrivalManeuverMode": "aerobraking",
+    "arrivalCapturePeriapsisRadius": 6421008.4,
+    "dvEjection": 2121.0423254431576,
+    "dvInjection": 0,
+    "dvTotal": 2121.0423254431576,
+    "ejectionVector": {
+      "x": 2667.0382863669947,
+      "y": 191.82063473573567,
+      "z": 164.8066011451317
+    },
+    "ejectionAngleText": "129.22 deg to retrograde"
+  },
+  "launch": {
+    "originName": "Mars",
+    "mode": "quick",
+    "targetPeriapsisAltitude": 200000,
+    "targetApoapsisAltitude": 200000,
+    "targetInclinationDeg": 0,
+    "launchLatitudeDeg": 0,
+    "launchLongitudeDeg": 0,
+    "idealDeltaVMps": 3412.091208140673,
+    "requiredDeltaVMps": 3796.7512405548805,
+    "gravityLossesMps": 384.66003241420725,
+    "dragLossesMps": 0,
+    "finalAltitudeMeters": 200000,
+    "finalVelocityMps": 3454.210599402269,
+    "timeToOrbitSeconds": 201.37218134370454,
+    "successful": true,
+    "isEstimate": true,
+    "summary": "=== [quick] Surface to Orbit: Mars ===\r\nTarget orbit:     200,0 x 200,0 km\r\nInclination:      0,0 deg\r\nStatus:           success\r\nRequired dV:      3796,8 m/s\r\nIdeal dV:         3412,1 m/s\r\nGravity losses:   384,7 m/s\r\nSurface launch window: unavailable\r\nRequested inclination 0,00 deg cannot contain the departure vector (declination 3,53 deg).\r\nTry target inclination: 3,60 deg (prograde 3,60 / retrograde 176,40)\r\nFallback window with suggested inclination:\r\nLaunch time:      2028-09-14 13:01:38 UTC\r\nLiftoff to burn:  09:27:12\r\nAscent lead:      00:03:21\r\nParking coast:    09:23:51\r\nCoast breakdown:  5 orbit(s) \u002B 00:19:44\r\nLaunch azimuth:   86,40 deg\r\nPlane node:       ascending\r\nPlane incl.:      3,60 deg\r\nPlane RAAN:       285,69 deg\r\nLaunch longitude: 285,69 deg inertial\r\nEjection decl.:   3,53 deg"
+  }
+}

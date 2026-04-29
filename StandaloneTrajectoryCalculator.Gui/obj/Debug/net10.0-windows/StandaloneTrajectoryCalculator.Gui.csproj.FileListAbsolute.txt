@@ -1,0 +1,14 @@
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\bin\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.exe
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\bin\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.deps.json
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\bin\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.runtimeconfig.json
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\bin\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.dll
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\bin\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.pdb
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.AssemblyInfoInputs.cache
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.AssemblyInfo.cs
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.csproj.CoreCompileInputs.cache
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.dll
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\refint\StandaloneTrajectoryCalculator.Gui.dll
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.pdb
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.genruntimeconfig.cache
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\ref\StandaloneTrajectoryCalculator.Gui.dll

@@ -1,0 +1,128 @@
+{
+  "mode": "single",
+  "calendar": {
+    "epochYear": 2000,
+    "epochDayOfYear": 1,
+    "daysPerYear": 365,
+    "hoursPerDay": 24,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60,
+    "usesUtcFormatting": true,
+    "epochUtc": "2000-01-01T12:00:00+00:00",
+    "secondsPerHour": 3600,
+    "secondsPerDay": 86400,
+    "secondsPerYear": 31536000
+  },
+  "centralBody": {
+    "name": "Sun",
+    "gravitationalParameter": 1.3271244004127942E+20
+  },
+  "transfer": {
+    "originName": "Earth",
+    "destinationName": "Mars",
+    "departureTime": 847713600,
+    "travelTime": 19008000,
+    "longWay": false,
+    "originPositionAtDeparture": {
+      "x": 96695736398.58356,
+      "y": 112166860927.14209,
+      "z": -8692653.611894077
+    },
+    "destinationPositionAtArrival": {
+      "x": -220272945419.06992,
+      "y": -97951398250.593,
+      "z": 3372165534.7505817
+    },
+    "originVelocity": {
+      "x": -23047.719416360524,
+      "y": 19338.19333570019,
+      "z": -1.2488796840060647
+    },
+    "transferInitialVelocity": {
+      "x": -21937.19287339064,
+      "y": 24900.25348049053,
+      "z": 1073.16731264698
+    },
+    "transferFinalVelocity": {
+      "x": 9743.185334070775,
+      "y": -17768.935602307407,
+      "z": -619.3935650113297
+    },
+    "destinationVelocity": {
+      "x": 10747.562588647757,
+      "y": -20068.696065764736,
+      "z": -684.2506795917905
+    },
+    "originVesselOrbitalSpeed": 7841.488762253497,
+    "destinationVesselOrbitalSpeed": 4836.09820442774,
+    "originBodyRadius": 6371008.4,
+    "originOrbitPeriapsisRadius": 6551008.4,
+    "originOrbitApoapsisRadius": 6691008.4,
+    "ejectionDeltaVector": {
+      "x": 948.8427584471683,
+      "y": 4752.268663762175,
+      "z": 917.9897861111111
+    },
+    "injectionDeltaVector": {
+      "x": -245.11519211812518,
+      "y": 561.2494959012489,
+      "z": 15.828180126711954
+    },
+    "phaseAngle": 0.9838870124232836,
+    "transferAngle": 2.7004735973706655,
+    "departureSeparation": 0.9838870124232836,
+    "ejectionInclination": 0.18721163329034757,
+    "insertionInclination": 0.025838716909035064,
+    "ejectionDVNormal": 2310.837522590583,
+    "ejectionDVPrograde": 4357.418412824885,
+    "ejectionHeading": 1.0831859158867163,
+    "ejectionAngle": 3.366202993583726,
+    "ejectionAngleIsRetrograde": false,
+    "hasDetailedEjectionAnalysis": true,
+    "arrivalManeuverMode": "elliptic-capture",
+    "arrivalCapturePeriapsisRadius": 3639500,
+    "arrivalCaptureApoapsisRadius": 577239978.521152,
+    "dvEjection": 4932.247487731925,
+    "dvInjection": 612.644256761324,
+    "dvTotal": 5544.891744493249,
+    "ejectionVector": {
+      "x": 1110.5265429698848,
+      "y": 5562.060144790339,
+      "z": 1074.4161923309862
+    },
+    "ejectionAngleText": "192.87 deg to prograde"
+  },
+  "launch": {
+    "originName": "Earth",
+    "mode": "quick",
+    "targetPeriapsisAltitude": 180000,
+    "targetApoapsisAltitude": 320000,
+    "targetInclinationDeg": 28.5,
+    "launchLatitudeDeg": 28.5,
+    "launchLongitudeDeg": 0,
+    "idealDeltaVMps": 7649.452722826902,
+    "requiredDeltaVMps": 9165.327123449944,
+    "gravityLossesMps": 1515.8744006230427,
+    "dragLossesMps": 0,
+    "finalAltitudeMeters": 180000,
+    "finalVelocityMps": 7841.488762253497,
+    "timeToOrbitSeconds": 633.4939527399872,
+    "successful": true,
+    "isEstimate": true,
+    "surfaceLaunchTiming": {
+      "launchTime": 847684507.068828,
+      "ascentLeadTimeSeconds": 633.4939527399872,
+      "parkingCoastTimeSeconds": 28459.437219262123,
+      "parkingOrbitPeriodSeconds": 5361.634342081541,
+      "wholeParkingOrbits": 5,
+      "residualParkingCoastSeconds": 1651.2655088544197,
+      "planeInclinationDeg": 28.5,
+      "planeRaanDeg": 279.12796425386813,
+      "launchAzimuthDeg": 90.00000000012504,
+      "inertialLongitudeAtLaunchDeg": 9.127964254130168,
+      "usesAscendingNode": false,
+      "ejectionDeclinationDeg": 10.726436463287778
+    },
+    "summary": "=== [quick] Surface to Orbit: Earth ===\r\nTarget orbit:     180,0 x 320,0 km\r\nInclination:      28,5 deg\r\nStatus:           success\r\nRequired dV:      9165,3 m/s\r\nIdeal dV:         7649,5 m/s\r\nGravity losses:   1515,9 m/s\r\nSurface launch window:\r\nLaunch time:      2026-11-11 15:55:07 UTC\r\nLiftoff to burn:  08:04:52\r\nAscent lead:      00:10:33\r\nParking coast:    07:54:19\r\nCoast breakdown:  5 orbit(s) \u002B 00:27:31\r\nLaunch azimuth:   90,00 deg\r\nPlane node:       descending\r\nPlane incl.:      28,50 deg\r\nPlane RAAN:       279,13 deg\r\nLaunch longitude: 9,13 deg inertial\r\nEjection decl.:   10,73 deg"
+  }
+}

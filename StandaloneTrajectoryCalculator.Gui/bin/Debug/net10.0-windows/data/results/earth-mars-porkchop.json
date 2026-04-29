@@ -1,0 +1,124 @@
+{
+  "mode": "porkchop",
+  "calendar": {
+    "epochYear": 2000,
+    "epochDayOfYear": 1,
+    "daysPerYear": 365,
+    "hoursPerDay": 24,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60,
+    "usesUtcFormatting": true,
+    "epochUtc": "2000-01-01T12:00:00+00:00",
+    "secondsPerHour": 3600,
+    "secondsPerDay": 86400,
+    "secondsPerYear": 31536000
+  },
+  "centralBody": {
+    "name": "Sun",
+    "gravitationalParameter": 1.3271244004127942E+20
+  },
+  "window": {
+    "departureStart": 838814400,
+    "departureEnd": 854712000,
+    "travelTimeMin": 10368000,
+    "travelTimeMax": 31104000,
+    "departureSteps": 48,
+    "travelTimeSteps": 48
+  },
+  "validPoints": 2304,
+  "invalidPoints": 0,
+  "hohmannTimeOfFlight": 22366448.37089322,
+  "synodicPeriod": 67385153.2512926,
+  "bestTransfer": {
+    "originName": "Earth",
+    "destinationName": "Mars",
+    "departureTime": 846255829.7872341,
+    "travelTime": 25368510.63829787,
+    "longWay": true,
+    "originPositionAtDeparture": {
+      "x": 125662002031.28038,
+      "y": 79564881868.73582,
+      "z": -6528020.1881910395
+    },
+    "destinationPositionAtArrival": {
+      "x": -144146647692.81183,
+      "y": -181083597016.27094,
+      "z": -240062505.8906014
+    },
+    "originVelocity": {
+      "x": -16420.930316977596,
+      "y": 25055.96090480803,
+      "z": -1.698317119565979
+    },
+    "transferInitialVelocity": {
+      "x": -18394.148733319278,
+      "y": 27377.598526255606,
+      "z": 108.51522675398687
+    },
+    "transferFinalVelocity": {
+      "x": 17256.441971404885,
+      "y": -12341.553253233127,
+      "z": -65.02779438945547
+    },
+    "destinationVelocity": {
+      "x": 19865.47949728495,
+      "y": -13014.559586085641,
+      "z": -761.091351499306
+    },
+    "originVesselOrbitalSpeed": 7788.482945312282,
+    "destinationVesselOrbitalSpeed": 4836.09820442774,
+    "originBodyRadius": 6371008.4,
+    "originOrbitPeriapsisRadius": 6571008.4,
+    "originOrbitApoapsisRadius": 6571008.4,
+    "ejectionDeltaVector": {
+      "x": -2341.903613777361,
+      "y": 2755.423064431846,
+      "z": 130.8063489308063
+    },
+    "injectionDeltaVector": {
+      "x": -697.0098084699945,
+      "y": 179.79504338573784,
+      "z": 185.95482886373128
+    },
+    "phaseAngle": 1.1388536633638426,
+    "transferAngle": 3.4756298311289204,
+    "ejectionInclination": 0.036156603918278955,
+    "insertionInclination": 0.2528061299991244,
+    "ejectionDVNormal": 411.7695463340962,
+    "ejectionDVPrograde": 3595.0556243066476,
+    "ejectionHeading": 1.4567555503524736,
+    "ejectionAngle": 2.518583312954453,
+    "ejectionAngleIsRetrograde": false,
+    "hasDetailedEjectionAnalysis": true,
+    "arrivalManeuverMode": "elliptic-capture",
+    "arrivalCapturePeriapsisRadius": 3639500,
+    "arrivalCaptureApoapsisRadius": 577239978.521152,
+    "dvEjection": 3618.5603630652695,
+    "dvInjection": 743.4568777724754,
+    "dvTotal": 4362.017240837745,
+    "ejectionVector": {
+      "x": -1973.2184163416823,
+      "y": 2321.637621447575,
+      "z": 110.21354387355285
+    },
+    "ejectionAngleText": "144.30 deg to prograde"
+  },
+  "launch": {
+    "originName": "Earth",
+    "mode": "quick",
+    "targetPeriapsisAltitude": 200000,
+    "targetApoapsisAltitude": 200000,
+    "targetInclinationDeg": 0,
+    "launchLatitudeDeg": -0,
+    "idealDeltaVMps": 7565.946074731828,
+    "requiredDeltaVMps": 8972.021870160683,
+    "gravityLossesMps": 1406.0757954288551,
+    "dragLossesMps": 0,
+    "finalAltitudeMeters": 200000,
+    "finalVelocityMps": 7788.482945312282,
+    "timeToOrbitSeconds": 0,
+    "successful": true,
+    "isEstimate": true,
+    "summary": "=== [quick] Surface to Orbit: Earth ===\r\nTarget orbit:     200,0 x 200,0 km\r\nInclination:      0,0 deg\r\nStatus:           success\r\nRequired dV:      8972,0 m/s\r\nIdeal dV:         7565,9 m/s\r\nGravity losses:   1406,1 m/s"
+  }
+}

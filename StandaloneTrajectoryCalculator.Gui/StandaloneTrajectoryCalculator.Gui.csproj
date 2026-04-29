@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\StandaloneTrajectoryCalculator\InputModels.cs" Link="Shared\InputModels.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\LambertSolver.cs" Link="Shared\LambertSolver.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\MissionCalendar.cs" Link="Shared\MissionCalendar.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\OrbitalAscentCalculator.cs" Link="Shared\OrbitalAscentCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\OrbitalModels.cs" Link="Shared\OrbitalModels.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\PorkchopCalculator.cs" Link="Shared\PorkchopCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\SampleScenarioFactory.cs" Link="Shared\SampleScenarioFactory.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\ScenarioExecutor.cs" Link="Shared\ScenarioExecutor.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\ScenarioJson.cs" Link="Shared\ScenarioJson.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\SolarSystemCatalog.cs" Link="Shared\SolarSystemCatalog.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\SurfaceLaunchTimingCalculator.cs" Link="Shared\SurfaceLaunchTimingCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\TransferCalculator.cs" Link="Shared\TransferCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\TransferModels.cs" Link="Shared\TransferModels.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Vector3D.cs" Link="Shared\Vector3D.cs" />
+  </ItemGroup>
+
+</Project>

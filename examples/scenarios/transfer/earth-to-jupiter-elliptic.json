@@ -1,0 +1,82 @@
+{
+  "calendar": {
+    "kind": "utc",
+    "epochUtc": "2000-01-01T12:00:00Z",
+    "epochYear": 2000,
+    "epochDayOfYear": 1,
+    "daysPerYear": 365,
+    "hoursPerDay": 24,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60
+  },
+  "centralBody": {
+    "name": "Sun",
+    "gravitationalParameter": 1.3271244004127942E+20
+  },
+  "bodies": [
+    {
+      "name": "Earth",
+      "gravitationalParameter": 398600435507000,
+      "radius": 6371008.4,
+      "sphereOfInfluence": 924646955.636956,
+      "orbit": {
+        "semiMajorAxis": 149597897627.61673,
+        "eccentricity": 0.01673163,
+        "inclinationDeg": -0.00054346,
+        "longitudeOfAscendingNodeDeg": -5.11260389,
+        "argumentOfPeriapsisDeg": 108.04266274,
+        "meanAnomalyAtEpochDeg": 357.53685687,
+        "epoch": 0,
+        "semiMajorAxisRate": -4487.936121,
+        "eccentricityRate": -3.661E-05,
+        "inclinationRateDegPerCentury": -0.01337178,
+        "longitudeOfAscendingNodeRateDegPerCentury": -0.24123856,
+        "longitudeOfPeriapsisDeg": 102.93005885,
+        "longitudeOfPeriapsisRateDegPerCentury": 0.3179526,
+        "meanLongitudeDeg": 100.46691572,
+        "meanLongitudeRateDegPerCentury": 35999.37306329,
+        "meanAnomalyQuadraticTermDegPerCentury2": 0,
+        "meanAnomalyCosineTermDeg": 0,
+        "meanAnomalySineTermDeg": 0,
+        "meanAnomalyFrequencyDegPerCentury": 0
+      }
+    },
+    {
+      "name": "Jupiter",
+      "gravitationalParameter": 1.266865319E+17,
+      "radius": 69911000,
+      "sphereOfInfluence": 48221206775.8089,
+      "orbit": {
+        "semiMajorAxis": 778298361448.3732,
+        "eccentricity": 0.0485359,
+        "inclinationDeg": 1.29861416,
+        "longitudeOfAscendingNodeDeg": 100.29282654,
+        "argumentOfPeriapsisDeg": -86.0178741,
+        "meanAnomalyAtEpochDeg": 20.05983908,
+        "epoch": 0,
+        "semiMajorAxisRate": -4284.48260848,
+        "eccentricityRate": 0.00018026,
+        "inclinationRateDegPerCentury": -0.00322699,
+        "longitudeOfAscendingNodeRateDegPerCentury": 0.13024619,
+        "longitudeOfPeriapsisDeg": 14.27495244,
+        "longitudeOfPeriapsisRateDegPerCentury": 0.18199196,
+        "meanLongitudeDeg": 34.33479152,
+        "meanLongitudeRateDegPerCentury": 3034.90371757,
+        "meanAnomalyQuadraticTermDegPerCentury2": -0.00012452,
+        "meanAnomalyCosineTermDeg": 0.06064060,
+        "meanAnomalySineTermDeg": -0.35635438,
+        "meanAnomalyFrequencyDegPerCentury": 38.35125
+      }
+    }
+  ],
+  "request": {
+    "mode": "single",
+    "origin": "Earth",
+    "destination": "Jupiter",
+    "departureTime": 915132941.772,
+    "travelTime": 86400000,
+    "departureParkingOrbitAltitude": 200000,
+    "arrivalParkingOrbitAltitude": 200000,
+    "arrivalManeuverMode": "elliptic-capture"
+  }
+}

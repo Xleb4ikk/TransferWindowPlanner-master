@@ -1,0 +1,84 @@
+{
+  "train": {
+    "smoke": {
+      "description": "Fast pipeline check on a small subset of the dataset.",
+      "output_dir": "artifacts/rocket-builder-smoke",
+      "args": [
+        "--device", "cuda",
+        "--epochs", "2",
+        "--batch-size", "1024",
+        "--max-missions", "60",
+        "--hidden-dims", "512,384,256,160",
+        "--engine-embedding-dim", "16",
+        "--stage-count-embedding-dim", "12",
+        "--mission-body-embedding-dim", "16"
+      ]
+    },
+    "base": {
+      "description": "Recommended tank-aware engine-aware training run.",
+      "output_dir": "artifacts/rocket-builder-ml-tank-aware",
+      "args": [
+        "--device", "cuda",
+        "--epochs", "64",
+        "--patience", "12",
+        "--batch-size", "6144",
+        "--lr", "0.0005",
+        "--min-lr", "0.00005",
+        "--warmup-epochs", "4",
+        "--hidden-dims", "1024,768,512,384,256",
+        "--propellant-embedding-dim", "40",
+        "--engine-embedding-dim", "24",
+        "--stage-count-embedding-dim", "20",
+        "--mission-body-embedding-dim", "24",
+        "--grad-clip", "1.0"
+      ]
+    },
+    "big": {
+      "description": "Large tank-aware model for a big dataset and enough VRAM.",
+      "output_dir": "artifacts/rocket-builder-ml-tank-aware-big",
+      "args": [
+        "--device", "cuda",
+        "--epochs", "80",
+        "--patience", "16",
+        "--batch-size", "8192",
+        "--lr", "0.00035",
+        "--min-lr", "0.00003",
+        "--warmup-epochs", "5",
+        "--hidden-dims", "1536,1152,768,512,320",
+        "--propellant-embedding-dim", "48",
+        "--engine-embedding-dim", "32",
+        "--stage-count-embedding-dim", "24",
+        "--mission-body-embedding-dim", "28",
+        "--grad-clip", "1.0"
+      ]
+    },
+    "outer_planet_big": {
+      "description": "Aggressive configuration for long-coast outer-planet datasets.",
+      "output_dir": "artifacts/rocket-builder-ml-tank-aware-outer-big",
+      "args": [
+        "--device", "cuda",
+        "--epochs", "96",
+        "--patience", "18",
+        "--batch-size", "7168",
+        "--lr", "0.0003",
+        "--min-lr", "0.000025",
+        "--warmup-epochs", "6",
+        "--hidden-dims", "1792,1280,896,640,384",
+        "--propellant-embedding-dim", "56",
+        "--engine-embedding-dim", "36",
+        "--stage-count-embedding-dim", "28",
+        "--mission-body-embedding-dim", "32",
+        "--grad-clip", "0.9"
+      ]
+    }
+  },
+  "predict": {
+    "base": {
+      "description": "Standard prediction run with top-5 candidates using the stage-dv model by default.",
+      "args": [
+        "--device", "cuda",
+        "--top-k", "5"
+      ]
+    }
+  }
+}

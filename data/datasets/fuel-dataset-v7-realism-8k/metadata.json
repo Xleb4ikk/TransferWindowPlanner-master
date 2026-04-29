@@ -1,0 +1,482 @@
+{
+  "generator": "FuelDatasetGenerator",
+  "version": 5,
+  "createdUtc": "2026-04-24T12:33:43.7716206+00:00",
+  "missionCount": 8000,
+  "architectureCount": 409416,
+  "options": {
+    "OutputDirectory": "C:\\Users\\xleb4ikk\\Desktop\\y4boba\\3\\new\\kspkyrs\\transerW\\TransferWindowPlanner-master\\data\\datasets\\fuel-dataset-v7-realism-8k",
+    "MissionCount": 8000,
+    "Seed": 50708,
+    "StartYearUtc": 2026,
+    "EndYearUtc": 2045,
+    "MinPayloadMassKg": 250,
+    "MaxPayloadMassKg": 100000,
+    "MinStageCount": 2,
+    "MaxStageCount": 5,
+    "MaxArchitecturesPerMissionOutput": 64,
+    "maxMissionAttempts": 320000
+  },
+  "assumptions": {
+    "solarFluxAtOneAuWm2": 1361,
+    "departureStorageDays": "sampled from a short/nominal/extended mixture and redistributed across lower stages",
+    "arrivalStorageDays": "arrival or cruise stage stores propellant for the full transfer travel time",
+    "travelFactor": "sampled from fast/nominal/long-coast mixture with an outer-planet long-tail",
+    "correctionReserveDvMps": "clamp(total_dv * 0.03, 25, 300)",
+    "rocketEquation": "multi-stage, synthetic, chemical-only",
+    "stageHardwareModel": "dry mass includes tankage, engine dry mass, payload-relative structure overhead, and fixed service mass per stage",
+    "tankCarryProxy": "sum(stage_tank_mass_kg * stage_number) to expose upper-stage inert burden to the learner",
+    "note": "Representative engineering priors for ML dataset bootstrapping, not flight-certified performance."
+  },
+  "stageTemplates": [
+    {
+      "totalStages": 2,
+      "departureStageCount": 1,
+      "arrivalStageCount": 1,
+      "departureDvFractions": [
+        1
+      ]
+    },
+    {
+      "totalStages": 3,
+      "departureStageCount": 2,
+      "arrivalStageCount": 1,
+      "departureDvFractions": [
+        0.58,
+        0.42
+      ]
+    },
+    {
+      "totalStages": 4,
+      "departureStageCount": 3,
+      "arrivalStageCount": 1,
+      "departureDvFractions": [
+        0.46,
+        0.32,
+        0.22
+      ]
+    },
+    {
+      "totalStages": 5,
+      "departureStageCount": 4,
+      "arrivalStageCount": 1,
+      "departureDvFractions": [
+        0.38,
+        0.27,
+        0.2,
+        0.15
+      ]
+    }
+  ],
+  "propellants": [
+    {
+      "Key": "lox_lh2",
+      "DisplayName": "LOX/LH2",
+      "Oxidizer": "LOX",
+      "Fuel": "LH2",
+      "StorageClass": "cryogenic",
+      "VacuumIspSeconds": 450,
+      "MixtureDensityKgPerM3": 360,
+      "BaseTankageFactor": 0.16,
+      "StorageComplexityFactor": 0.035,
+      "BaseBoiloffPerDayAt1Au": 0.0035,
+      "SolarFluxExponent": 1.1,
+      "PrimaryBurnPenaltyFactor": 0,
+      "LongCoastPenaltyFactor": 0.18,
+      "RestartPenaltyFactor": 0.01,
+      "HandlingPenaltyFactor": 0.02
+    },
+    {
+      "Key": "lox_ch4",
+      "DisplayName": "LOX/LCH4",
+      "Oxidizer": "LOX",
+      "Fuel": "LCH4",
+      "StorageClass": "semi-cryogenic",
+      "VacuumIspSeconds": 360,
+      "MixtureDensityKgPerM3": 830,
+      "BaseTankageFactor": 0.1,
+      "StorageComplexityFactor": 0.02,
+      "BaseBoiloffPerDayAt1Au": 0.001,
+      "SolarFluxExponent": 1,
+      "PrimaryBurnPenaltyFactor": 0.01,
+      "LongCoastPenaltyFactor": 0.07,
+      "RestartPenaltyFactor": 0.02,
+      "HandlingPenaltyFactor": 0.01
+    },
+    {
+      "Key": "lox_rp1",
+      "DisplayName": "LOX/RP-1",
+      "Oxidizer": "LOX",
+      "Fuel": "RP-1",
+      "StorageClass": "semi-cryogenic",
+      "VacuumIspSeconds": 330,
+      "MixtureDensityKgPerM3": 1020,
+      "BaseTankageFactor": 0.07,
+      "StorageComplexityFactor": 0.012,
+      "BaseBoiloffPerDayAt1Au": 0.00035,
+      "SolarFluxExponent": 0.95,
+      "PrimaryBurnPenaltyFactor": 0,
+      "LongCoastPenaltyFactor": 0.12,
+      "RestartPenaltyFactor": 0.06,
+      "HandlingPenaltyFactor": 0.01
+    },
+    {
+      "Key": "nto_mmh",
+      "DisplayName": "NTO/MMH",
+      "Oxidizer": "NTO",
+      "Fuel": "MMH",
+      "StorageClass": "storable",
+      "VacuumIspSeconds": 322,
+      "MixtureDensityKgPerM3": 1150,
+      "BaseTankageFactor": 0.09,
+      "StorageComplexityFactor": 0.004,
+      "BaseBoiloffPerDayAt1Au": 2E-05,
+      "SolarFluxExponent": 0.15,
+      "PrimaryBurnPenaltyFactor": 0.04,
+      "LongCoastPenaltyFactor": 0,
+      "RestartPenaltyFactor": 0,
+      "HandlingPenaltyFactor": 0.03
+    },
+    {
+      "Key": "hydrazine",
+      "DisplayName": "Hydrazine",
+      "Oxidizer": "none",
+      "Fuel": "N2H4",
+      "StorageClass": "storable",
+      "VacuumIspSeconds": 230,
+      "MixtureDensityKgPerM3": 1010,
+      "BaseTankageFactor": 0.12,
+      "StorageComplexityFactor": 0.005,
+      "BaseBoiloffPerDayAt1Au": 1E-05,
+      "SolarFluxExponent": 0.1,
+      "PrimaryBurnPenaltyFactor": 0.2,
+      "LongCoastPenaltyFactor": 0.01,
+      "RestartPenaltyFactor": 0,
+      "HandlingPenaltyFactor": 0.04
+    }
+  ],
+  "engines": [
+    {
+      "Key": "rd191",
+      "DisplayName": "RD-191",
+      "PropellantKey": "lox_rp1",
+      "VacuumIspSeconds": 337,
+      "VacuumThrustkN": 2090,
+      "DryMassKg": 2200,
+      "MaxClusterCount": 12,
+      "SelectionRank": 10,
+      "SupportsRestart": false,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "booster",
+        "departure_core"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "merlin_vac",
+      "DisplayName": "Merlin Vacuum",
+      "PropellantKey": "lox_rp1",
+      "VacuumIspSeconds": 348,
+      "VacuumThrustkN": 981,
+      "DryMassKg": 470,
+      "MaxClusterCount": 9,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "departure_mid",
+        "departure_upper"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "be4",
+      "DisplayName": "BE-4",
+      "PropellantKey": "lox_ch4",
+      "VacuumIspSeconds": 340,
+      "VacuumThrustkN": 2400,
+      "DryMassKg": 2500,
+      "MaxClusterCount": 8,
+      "SelectionRank": 10,
+      "SupportsRestart": true,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "booster",
+        "departure_core"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "raptor_vac",
+      "DisplayName": "Raptor Vacuum",
+      "PropellantKey": "lox_ch4",
+      "VacuumIspSeconds": 380,
+      "VacuumThrustkN": 2580,
+      "DryMassKg": 1600,
+      "MaxClusterCount": 6,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "departure_mid",
+        "departure_upper",
+        "cruise_arrival"
+      ],
+      "SupportedSegments": [
+        "Departure",
+        "Arrival"
+      ]
+    },
+    {
+      "Key": "rs25e",
+      "DisplayName": "RS-25E",
+      "PropellantKey": "lox_lh2",
+      "VacuumIspSeconds": 452,
+      "VacuumThrustkN": 2279,
+      "DryMassKg": 3527,
+      "MaxClusterCount": 6,
+      "SelectionRank": 10,
+      "SupportsRestart": true,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "booster",
+        "departure_core"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "j2x",
+      "DisplayName": "J-2X",
+      "PropellantKey": "lox_lh2",
+      "VacuumIspSeconds": 448,
+      "VacuumThrustkN": 1307,
+      "DryMassKg": 2470,
+      "MaxClusterCount": 6,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "departure_mid",
+        "departure_upper"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "rl10c1",
+      "DisplayName": "RL10C-1",
+      "PropellantKey": "lox_lh2",
+      "VacuumIspSeconds": 452,
+      "VacuumThrustkN": 110,
+      "DryMassKg": 277,
+      "MaxClusterCount": 12,
+      "SelectionRank": 30,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "cruise_arrival"
+      ],
+      "SupportedSegments": [
+        "Arrival"
+      ]
+    },
+    {
+      "Key": "superdraco",
+      "DisplayName": "SuperDraco",
+      "PropellantKey": "nto_mmh",
+      "VacuumIspSeconds": 235,
+      "VacuumThrustkN": 73,
+      "DryMassKg": 100,
+      "MaxClusterCount": 24,
+      "SelectionRank": 10,
+      "SupportsRestart": true,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "departure_mid"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "aj10_190",
+      "DisplayName": "AJ10-190",
+      "PropellantKey": "nto_mmh",
+      "VacuumIspSeconds": 319,
+      "VacuumThrustkN": 43.7,
+      "DryMassKg": 110,
+      "MaxClusterCount": 16,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "departure_upper",
+        "cruise_arrival"
+      ],
+      "SupportedSegments": [
+        "Departure",
+        "Arrival"
+      ]
+    },
+    {
+      "Key": "mr111g",
+      "DisplayName": "MR-111G",
+      "PropellantKey": "hydrazine",
+      "VacuumIspSeconds": 230,
+      "VacuumThrustkN": 0.44,
+      "DryMassKg": 3.6,
+      "MaxClusterCount": 96,
+      "SelectionRank": 10,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "cruise_arrival"
+      ],
+      "SupportedSegments": [
+        "Arrival"
+      ]
+    },
+    {
+      "Key": "rd180",
+      "DisplayName": "RD-180",
+      "PropellantKey": "lox_rp1",
+      "VacuumIspSeconds": 338,
+      "VacuumThrustkN": 4150,
+      "DryMassKg": 5480,
+      "MaxClusterCount": 4,
+      "SelectionRank": 10,
+      "SupportsRestart": false,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "booster",
+        "departure_core"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "f1",
+      "DisplayName": "F-1",
+      "PropellantKey": "lox_rp1",
+      "VacuumIspSeconds": 304,
+      "VacuumThrustkN": 7770,
+      "DryMassKg": 8400,
+      "MaxClusterCount": 6,
+      "SelectionRank": 10,
+      "SupportsRestart": false,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "booster",
+        "departure_core"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "raptor",
+      "DisplayName": "Raptor",
+      "PropellantKey": "lox_ch4",
+      "VacuumIspSeconds": 350,
+      "VacuumThrustkN": 2747,
+      "DryMassKg": 1525,
+      "MaxClusterCount": 33,
+      "SelectionRank": 10,
+      "SupportsRestart": true,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "booster",
+        "departure_core"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "vinci",
+      "DisplayName": "Vinci",
+      "PropellantKey": "lox_lh2",
+      "VacuumIspSeconds": 457,
+      "VacuumThrustkN": 180,
+      "DryMassKg": 550,
+      "MaxClusterCount": 6,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "departure_mid",
+        "departure_upper"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "hm7b",
+      "DisplayName": "HM7B",
+      "PropellantKey": "lox_lh2",
+      "VacuumIspSeconds": 445,
+      "VacuumThrustkN": 62,
+      "DryMassKg": 165,
+      "MaxClusterCount": 8,
+      "SelectionRank": 30,
+      "SupportsRestart": false,
+      "SupportsLongCoast": false,
+      "SupportedRoles": [
+        "departure_upper"
+      ],
+      "SupportedSegments": [
+        "Departure"
+      ]
+    },
+    {
+      "Key": "rl10b2",
+      "DisplayName": "RL10B-2",
+      "PropellantKey": "lox_lh2",
+      "VacuumIspSeconds": 465.5,
+      "VacuumThrustkN": 110.1,
+      "DryMassKg": 301,
+      "MaxClusterCount": 12,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "departure_upper",
+        "cruise_arrival"
+      ],
+      "SupportedSegments": [
+        "Departure",
+        "Arrival"
+      ]
+    },
+    {
+      "Key": "r4d",
+      "DisplayName": "R-4D",
+      "PropellantKey": "nto_mmh",
+      "VacuumIspSeconds": 312,
+      "VacuumThrustkN": 0.49,
+      "DryMassKg": 3.6,
+      "MaxClusterCount": 96,
+      "SelectionRank": 20,
+      "SupportsRestart": true,
+      "SupportsLongCoast": true,
+      "SupportedRoles": [
+        "cruise_arrival"
+      ],
+      "SupportedSegments": [
+        "Arrival"
+      ]
+    }
+  ]
+}

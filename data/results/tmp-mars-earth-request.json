@@ -1,0 +1,21 @@
+{
+  "origin": "Mars",
+  "destination": "Earth",
+  "payload_mass_kg": 1300.0,
+  "dv_total_mps": 5790.55524991,
+  "travel_days": 142.241,
+  "mean_distance_au": 1.300982,
+  "min_distance_au": 0.991178,
+  "dv_ejection_mps": 5790.55524991,
+  "dv_injection_mps": 0.0,
+  "launch_ascent_dv_mps": 3789.81189341,
+  "departure_orbit_km": 200.0,
+  "arrival_orbit_km": 50.0,
+  "departure_distance_au": 1.61078646,
+  "arrival_distance_au": 0.99117757,
+  "departure_solar_flux_w_m2": 524.54431539,
+  "mean_solar_flux_w_m2": 804.11014213,
+  "phase_angle_deg": -295.45615439,
+  "correction_reserve_dv_mps": 60.02230069,
+  "surface_launch": true
+}

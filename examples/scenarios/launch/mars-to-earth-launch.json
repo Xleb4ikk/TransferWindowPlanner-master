@@ -1,0 +1,66 @@
+{
+  "calendar": {
+    "kind": "utc",
+    "epochUtc": "2000-01-01T12:00:00Z",
+    "epochYear": 2000,
+    "epochDayOfYear": 1,
+    "daysPerYear": 365,
+    "hoursPerDay": 24,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60
+  },
+  "centralBody": {
+    "name": "Sun",
+    "gravitationalParameter": 1.3271244004127942E+20
+  },
+  "bodies": [
+    {
+      "name": "Earth",
+      "gravitationalParameter": 398600435507000,
+      "radius": 6371008.4,
+      "sphereOfInfluence": 924646955.636956,
+      "orbit": {
+        "semiMajorAxis": 149597897627.61673,
+        "eccentricity": 0.01673163,
+        "inclinationDeg": -0.00054346,
+        "longitudeOfAscendingNodeDeg": -5.11260389,
+        "argumentOfPeriapsisDeg": 108.04266274,
+        "meanAnomalyAtEpochDeg": 357.53685687,
+        "epoch": 0
+      }
+    },
+    {
+      "name": "Mars",
+      "gravitationalParameter": 42828375214460,
+      "radius": 3389500,
+      "sphereOfInfluence": 577100000,
+      "rotationPeriodSeconds": 88800,
+      "orbit": {
+        "semiMajorAxis": 227943920000,
+        "eccentricity": 0.09341233,
+        "inclinationDeg": 1.85061,
+        "longitudeOfAscendingNodeDeg": 49.57854,
+        "argumentOfPeriapsisDeg": 286.46230,
+        "meanAnomalyAtEpochDeg": 19.3733,
+        "epoch": 0
+      }
+    }
+  ],
+  "request": {
+    "mode": "single",
+    "origin": "Mars",
+    "destination": "Earth",
+    "departureTime": 0,
+    "travelTime": 86400,
+    "launch": {
+      "enabled": true,
+      "mode": "quick",
+      "rocketInitialMass": 500000,
+      "rocketThrust": 7000000,
+      "rocketIsp": 310,
+      "launchLatitude": 0,
+      "launchLongitude": 0,
+      "targetInclination": 0
+    }
+  }
+}

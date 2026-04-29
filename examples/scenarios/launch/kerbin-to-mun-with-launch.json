@@ -1,0 +1,61 @@
+{
+  "calendar": {
+    "kind": "custom",
+    "daysPerYear": 426,
+    "hoursPerDay": 6,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60
+  },
+  "centralBody": {
+    "name": "Kerbol",
+    "gravitationalParameter": 1.1723328900000001e20
+  },
+  "bodies": [
+    {
+      "name": "Kerbin",
+      "gravitationalParameter": 3.5316e12,
+      "radius": 6371000,
+      "orbit": {
+        "semiMajorAxis": 13599840256,
+        "eccentricity": 0,
+        "inclinationDeg": 0,
+        "longitudeOfAscendingNodeDeg": 0,
+        "argumentOfPeriapsisDeg": 0,
+        "meanAnomalyAtEpochDeg": 0,
+        "epoch": 0
+      }
+    },
+    {
+      "name": "Mun",
+      "gravitationalParameter": 6.6134895e10,
+      "radius": 338000,
+      "orbit": {
+        "semiMajorAxis": 12000000,
+        "eccentricity": 0.0313,
+        "inclinationDeg": 0.9,
+        "longitudeOfAscendingNodeDeg": 0,
+        "argumentOfPeriapsisDeg": 0,
+        "meanAnomalyAtEpochDeg": 1.7,
+        "epoch": 0
+      }
+    }
+  ],
+  "request": {
+    "mode": "single",
+    "origin": "Kerbin",
+    "destination": "Mun",
+    "departureTime": 0,
+    "travelTime": 3600,
+    "departureParkingOrbitAltitude": 70000,
+    "arrivalParkingOrbitAltitude": 100000,
+    "launch": {
+      "enabled": true,
+      "rocketInitialMass": 500000,
+      "rocketThrust": 7000000,
+      "rocketIsp": 310,
+      "launchLatitude": 0,
+      "targetInclination": 0,
+      "planetRotationPeriod": 21549.425
+    }
+  }
+}
