@@ -12,3 +12,4 @@ C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-ma
 C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.pdb
 C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.genruntimeconfig.cache
 C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\ref\StandaloneTrajectoryCalculator.Gui.dll
+C:\Users\xleb4ikk\Desktop\y4boba\3\new\kspkyrs\transerW\TransferWindowPlanner-master\StandaloneTrajectoryCalculator.Gui\obj\Debug\net10.0-windows\StandaloneTrajectoryCalculator.Gui.sourcelink.json

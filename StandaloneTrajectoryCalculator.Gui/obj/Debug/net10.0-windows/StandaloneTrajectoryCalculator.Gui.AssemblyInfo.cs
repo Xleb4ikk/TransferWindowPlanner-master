@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StandaloneTrajectoryCalculator.Gui")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13da4b4348dfbdf3666dc121fa56b2f3910b473a")]
 [assembly: System.Reflection.AssemblyProductAttribute("StandaloneTrajectoryCalculator.Gui")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StandaloneTrajectoryCalculator.Gui")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
