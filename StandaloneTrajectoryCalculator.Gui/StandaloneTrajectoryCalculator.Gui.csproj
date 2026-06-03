@@ -9,20 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\StandaloneTrajectoryCalculator\InputModels.cs" Link="Shared\InputModels.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\LambertSolver.cs" Link="Shared\LambertSolver.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\MissionCalendar.cs" Link="Shared\MissionCalendar.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\OrbitalAscentCalculator.cs" Link="Shared\OrbitalAscentCalculator.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\OrbitalModels.cs" Link="Shared\OrbitalModels.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\PorkchopCalculator.cs" Link="Shared\PorkchopCalculator.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\SampleScenarioFactory.cs" Link="Shared\SampleScenarioFactory.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\ScenarioExecutor.cs" Link="Shared\ScenarioExecutor.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\ScenarioJson.cs" Link="Shared\ScenarioJson.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\SolarSystemCatalog.cs" Link="Shared\SolarSystemCatalog.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\SurfaceLaunchTimingCalculator.cs" Link="Shared\SurfaceLaunchTimingCalculator.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\TransferCalculator.cs" Link="Shared\TransferCalculator.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\TransferModels.cs" Link="Shared\TransferModels.cs" />
-    <Compile Include="..\StandaloneTrajectoryCalculator\Vector3D.cs" Link="Shared\Vector3D.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\InputModels.cs" Link="Shared\InputModels.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\LambertSolver.cs" Link="Shared\LambertSolver.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\MissionCalendar.cs" Link="Shared\MissionCalendar.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\OrbitalAscentCalculator.cs" Link="Shared\OrbitalAscentCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\OrbitalModels.cs" Link="Shared\OrbitalModels.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\PorkchopCalculator.cs" Link="Shared\PorkchopCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\SampleScenarioFactory.cs" Link="Shared\SampleScenarioFactory.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\ScenarioExecutor.cs" Link="Shared\ScenarioExecutor.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\ScenarioJson.cs" Link="Shared\ScenarioJson.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\SolarSystemCatalog.cs" Link="Shared\SolarSystemCatalog.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\SurfaceLaunchTimingCalculator.cs" Link="Shared\SurfaceLaunchTimingCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\TransferCalculator.cs" Link="Shared\TransferCalculator.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\TransferModels.cs" Link="Shared\TransferModels.cs" />
+    <Compile Include="..\StandaloneTrajectoryCalculator\Core\Vector3D.cs" Link="Shared\Vector3D.cs" />
   </ItemGroup>
 
 </Project>

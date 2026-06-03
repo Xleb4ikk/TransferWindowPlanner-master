@@ -3,6 +3,7 @@
 # Python cache
 __pycache__/
 *.py[cod]
+.pytest_cache/
 
 # Virtualenvs
 venv/
@@ -37,6 +38,10 @@ rocket-builder-ml-*/
 # Dataset / generated data
 data/
 data/**
+!scripts/
+!scripts/datasets/
+# Don't ignore the raw dataset generator scripts
+scripts/datasets/*.py
 
 # Logs
 *.log

@@ -19,6 +19,7 @@
       "gravitationalParameter": 398600435507000,
       "radius": 6371008.4,
       "sphereOfInfluence": 924646955.636956,
+      "rotationPeriodSeconds": 86164.0905,
       "orbit": {
         "semiMajorAxis": 149597897627.61673,
         "eccentricity": 0.01673163,
@@ -46,6 +47,7 @@
       "gravitationalParameter": 42828373620000,
       "radius": 3389500,
       "sphereOfInfluence": 577239978.521152,
+      "rotationPeriodSeconds": 88642.6848,
       "orbit": {
         "semiMajorAxis": 227944135087.1228,
         "eccentricity": 0.09336511,
@@ -78,8 +80,11 @@
     "departureSteps": 80,
     "travelTimeSteps": 80,
     "departureParkingOrbitAltitude": 200000,
+    "departureParkingOrbitPeriapsisAltitude": 200000,
+    "departureParkingOrbitApoapsisAltitude": 200000,
     "arrivalParkingOrbitAltitude": 250000,
     "arrivalManeuverMode": "circular-capture",
+    "useAerobraking": false,
     "resultOutputPath": "data/results/earth-mars-single.json"
   }
 }
