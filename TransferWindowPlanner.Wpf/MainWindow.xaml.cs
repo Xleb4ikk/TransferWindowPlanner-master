@@ -192,24 +192,40 @@ public partial class MainWindow : Window
 
     private void RocketBuilder_Click(object sender, RoutedEventArgs e)
     {
-        try
+        Gui.RocketBuilderMissionRequest? seed = null;
+        if (_lastResult?.Transfer is { } t)
         {
-            var scriptPath = System.IO.Path.GetFullPath(System.IO.Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "..", "..", "..", "..", "launch_rocket_builder.ps1"));
-            var psi = new System.Diagnostics.ProcessStartInfo
+            var cal = _lastResult.Calendar;
+            var originAu = t.OriginPositionAtDeparture.Magnitude / Core.SolarSystemCatalog.AstronomicalUnit;
+            var destAu = t.DestinationPositionAtArrival.Magnitude / Core.SolarSystemCatalog.AstronomicalUnit;
+            var meanDist = (originAu + destAu) / 2.0;
+            var minDist = Math.Min(originAu, destAu);
+            seed = new Gui.RocketBuilderMissionRequest
             {
-                FileName = "powershell.exe",
-                Arguments = $"-ExecutionPolicy Bypass -NoProfile -File \"{scriptPath}\" -ModeOverride gui",
-                UseShellExecute = true
+                Origin = t.OriginName,
+                Destination = t.DestinationName,
+                DvTotalMps = t.DVTotal,
+                DvEjectionMps = t.DVEjection,
+                DvInjectionMps = t.DVInjection,
+                TravelDays = t.TravelTime / Core.SolarSystemCatalog.SecondsPerDay,
+                MeanDistanceAu = meanDist,
+                MinDistanceAu = minDist,
+                PayloadMassKg = 50000,
+                CorrectionReserveDvMps = Math.Clamp(t.DVTotal * 0.03, 25, 300),
+                DepartureDistanceAu = originAu,
+                ArrivalDistanceAu = destAu,
+                DepartureSolarFluxWm2 = 1361.0 / (originAu * originAu),
+                MeanSolarFluxWm2 = 1361.0 / (meanDist * meanDist),
+                PhaseAngleDeg = t.PhaseAngle * Core.LambertSolver.Rad2Deg,
+                TransferAngleDeg = t.TransferAngle * Core.LambertSolver.Rad2Deg,
+                LongWay = t.LongWay,
+                DepartureSurfaceGravityMps2 = Core.SolarSystemCatalog.CreateBodyInput(t.OriginName).GravitationalParameter
+                    / (Core.SolarSystemCatalog.CreateBodyInput(t.OriginName).Radius * Core.SolarSystemCatalog.CreateBodyInput(t.OriginName).Radius)
             };
-            System.Diagnostics.Process.Start(psi);
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Failed to launch Rocket Builder: {ex.Message}", "Error",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+
+        var form = new Gui.RocketBuilderWindow(seed) { Owner = this };
+        form.ShowDialog();
     }
 
     private void Mode_SelectionChanged(object sender, SelectionChangedEventArgs e)
