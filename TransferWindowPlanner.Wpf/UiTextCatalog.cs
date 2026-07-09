@@ -23,7 +23,11 @@ internal static class UiTextCatalog
         ["action.open_json"] = "Open JSON",
         ["action.save_json"] = "Save JSON",
         ["action.run"] = "Run",
-        ["group.mission"] = "Mission",
+        ["action.rocket_builder"] = "AI Rocket Builder",
+        ["card.transfer_schedule"] = "Transfer Schedule",
+        ["card.porkchop_scan"] = "Porkchop Scan",
+        ["field.trajectory"] = "Trajectory",
+        ["field.aerobraking"] = "Use Aerobraking",
         ["group.parking_orbits"] = "Parking Orbits",
         ["group.output_files"] = "Output Files",
         ["group.selected_planet_data"] = "Selected Planet Data",
@@ -79,6 +83,7 @@ internal static class UiTextCatalog
         ["status.completed"] = "Calculation completed. Files written: {0}.",
         ["status.loaded"] = "Loaded scenario from {0}",
         ["status.saved"] = "Scenario saved to {0}",
+        ["status.ready"] = "Ready",
         ["status.scenario_loaded"] = "Scenario loaded.",
         ["status.error"] = "Error: {0}",
         ["text.no_files_written"] = "No files were written.",
@@ -106,6 +111,7 @@ internal static class UiTextCatalog
         ["error.same_planets"] = "Origin and destination planets must be different.",
         ["error.required"] = "{0} is required.",
         ["error.planet_not_found"] = "Planet '{0}' is not in the built-in Solar System catalog.",
+        ["error.departure_orbit_order"] = "Departure orbit apoapsis must be greater than or equal to periapsis.",
         ["visual.empty_delta"] = "Run a calculation to see the minimum delta-v.",
         ["visual.empty_solar"] = "Run a calculation to see the departure geometry.",
         ["visual.delta.best_caption"] = "Best transfer from porkchop scan",
@@ -135,9 +141,6 @@ internal static class UiTextCatalog
         ["field.departure_orbit_apoapsis"] = "Departure orbit apoapsis, km",
         ["option.launch_profile.orbit"] = "start in parking orbit",
         ["option.launch_profile.surface"] = "launch from surface",
-        ["error.departure_orbit_order"] = "Departure orbit apoapsis must be greater than or equal to periapsis.",
-        ["field.launch_longitude"] = "Р”РѕР»РіРѕС‚Р° Р·Р°РїСѓСЃРєР°, РіСЂР°Рґ"
-        ,["field.launch_longitude"] = "Launch longitude, deg"
     };
 
     private static readonly IReadOnlyDictionary<string, string> Russian = new Dictionary<string, string>
@@ -153,6 +156,11 @@ internal static class UiTextCatalog
         ["action.open_json"] = "Открыть JSON",
         ["action.save_json"] = "Сохранить JSON",
         ["action.run"] = "Запустить",
+        ["action.rocket_builder"] = "Ракетостроитель",
+        ["card.transfer_schedule"] = "Расписание перелёта",
+        ["card.porkchop_scan"] = "Сканирование porkchop",
+        ["field.trajectory"] = "Траектория",
+        ["field.aerobraking"] = "Использовать аэрозамедление",
         ["group.mission"] = "Миссия",
         ["group.parking_orbits"] = "Парковочные орбиты",
         ["group.output_files"] = "Файлы вывода",
@@ -189,6 +197,7 @@ internal static class UiTextCatalog
         ["field.launch_thrust_mn"] = "Тяга ракеты, МН",
         ["field.launch_isp_sec"] = "Удельный импульс, сек",
         ["field.launch_latitude"] = "Широта запуска, град",
+        ["field.launch_longitude"] = "Долгота запуска, град",
         ["field.launch_inclination"] = "Целевой наклон, град",
         ["group.launch_config"] = "Конфигурация запуска",
         ["option.launch_mode.quick"] = "Быстрая оценка (без данных)",
@@ -208,6 +217,7 @@ internal static class UiTextCatalog
         ["status.completed"] = "Расчет завершен. Создано файлов: {0}.",
         ["status.loaded"] = "Сценарий загружен из {0}",
         ["status.saved"] = "Сценарий сохранен в {0}",
+        ["status.ready"] = "Готов",
         ["status.scenario_loaded"] = "Сценарий загружен.",
         ["status.error"] = "Ошибка: {0}",
         ["text.no_files_written"] = "Файлы не были созданы.",
@@ -235,6 +245,7 @@ internal static class UiTextCatalog
         ["error.same_planets"] = "Планета отправления и назначения должны отличаться.",
         ["error.required"] = "Поле \"{0}\" обязательно.",
         ["error.planet_not_found"] = "Планета \"{0}\" отсутствует во встроенном каталоге Солнечной системы.",
+        ["error.departure_orbit_order"] = "Апоцентр стартовой орбиты не может быть меньше перицентра.",
         ["visual.empty_delta"] = "Запусти расчет, чтобы увидеть минимум delta-v.",
         ["visual.empty_solar"] = "Запусти расчет, чтобы увидеть геометрию старта.",
         ["visual.delta.best_caption"] = "Лучший перелет из porkchop-скана",
@@ -264,8 +275,6 @@ internal static class UiTextCatalog
         ["field.departure_orbit_apoapsis"] = "Апоцентр стартовой орбиты, км",
         ["option.launch_profile.orbit"] = "Старт с орбиты",
         ["option.launch_profile.surface"] = "Запуск с поверхности",
-        ["error.departure_orbit_order"] = "Апоцентр стартовой орбиты не может быть меньше перицентра."
-        ,["field.launch_longitude"] = "Launch longitude, deg"
     };
 
     public static UiLanguage DetectInitialLanguage()
