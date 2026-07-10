@@ -77,27 +77,19 @@ public static class PorkchopCalculator
             for (var y = 0; y < window.TravelTimeSteps; y++)
             {
                 var travelTime = window.TravelTimeMin + y * travelResolution;
-                TransferDetails? transfer;
-
-                try
-                {
-                    transfer = TransferCalculator.CalculateTransfer(
-                        origin,
-                        destination,
-                        centralBody,
-                        departureTime,
-                        travelTime,
-                        request.ResolveDepartureOrbitPeriapsisAltitude(),
-                        request.ResolveDepartureOrbitApoapsisAltitude(),
-                        request.ArrivalParkingOrbitAltitude,
-                        request.ArrivalManeuverMode,
-                        request.UseAerobraking,
-                        request.LongWay);
-                }
-                catch
-                {
-                    transfer = null;
-                }
+                
+                var transfer = CalculateBestTransfer(
+                    origin,
+                    destination,
+                    centralBody,
+                    departureTime,
+                    travelTime,
+                    request.ResolveDepartureOrbitPeriapsisAltitude(),
+                    request.ResolveDepartureOrbitApoapsisAltitude(),
+                    request.ArrivalParkingOrbitAltitude,
+                    request.ArrivalManeuverMode,
+                    request.UseAerobraking,
+                    request.LongWay);
 
                 if (transfer is null)
                 {
@@ -133,6 +125,15 @@ public static class PorkchopCalculator
             throw new InvalidOperationException("No valid transfers were found in the porkchop window.");
         }
 
+        // Grid scan gives a result only at grid nodes (e.g., ~11-day step with
+        // 80 steps across a 2.5-year window). Refine with a local simplex search
+        // around the best grid point to find the true dV minimum.
+        var refined = RefineBestTransfer(origin, destination, centralBody, request, window, bestTransfer);
+        if (refined is not null && refined.DVTotal <= bestTransfer.DVTotal)
+        {
+            bestTransfer = refined;
+        }
+
         return new PorkchopResult
         {
             Window = window,
@@ -143,5 +144,202 @@ public static class PorkchopCalculator
             HohmannTimeOfFlight = TransferCalculator.HohmannTimeOfFlight(origin, destination),
             SynodicPeriod = TransferCalculator.SynodicPeriod(origin, destination)
         };
+    }
+
+    /// <summary>
+    /// Calculates transfer using both short-way and long-way Lambert solutions,
+    /// returning the one with minimal total delta-V.
+    /// If longWayOverride is specified, only that branch is evaluated.
+    /// </summary>
+    private static TransferDetails? CalculateBestTransfer(
+        OrbitalBody origin,
+        OrbitalBody destination,
+        CentralBody centralBody,
+        double departureTime,
+        double travelTime,
+        double departurePeriapsis,
+        double? departureApoapsis,
+        double? arrivalAltitude,
+        string? arrivalMode,
+        bool useAerobraking,
+        bool? longWayOverride)
+    {
+        // If user explicitly specified longWay, use only that branch
+        if (longWayOverride.HasValue)
+        {
+            try
+            {
+                return TransferCalculator.CalculateTransfer(
+                    origin, destination, centralBody,
+                    departureTime, travelTime,
+                    departurePeriapsis, departureApoapsis,
+                    arrivalAltitude, arrivalMode, useAerobraking,
+                    longWayOverride);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        // Otherwise, evaluate both branches and pick the best
+        var candidates = new List<TransferDetails>();
+
+        try
+        {
+            var shortTransfer = TransferCalculator.CalculateTransfer(
+                origin, destination, centralBody,
+                departureTime, travelTime,
+                departurePeriapsis, departureApoapsis,
+                arrivalAltitude, arrivalMode, useAerobraking,
+                false);
+            if (shortTransfer != null)
+            {
+                candidates.Add(shortTransfer);
+            }
+        }
+        catch
+        {
+            // Short-way solution doesn't exist or failed
+        }
+
+        try
+        {
+            var longTransfer = TransferCalculator.CalculateTransfer(
+                origin, destination, centralBody,
+                departureTime, travelTime,
+                departurePeriapsis, departureApoapsis,
+                arrivalAltitude, arrivalMode, useAerobraking,
+                true);
+            if (longTransfer != null)
+            {
+                candidates.Add(longTransfer);
+            }
+        }
+        catch
+        {
+            // Long-way solution doesn't exist or failed
+        }
+
+        return candidates
+            .OrderBy(t => t.DVTotal)
+            .FirstOrDefault();
+    }
+
+    private static TransferDetails? RefineBestTransfer(
+        OrbitalBody origin,
+        OrbitalBody destination,
+        CentralBody centralBody,
+        CalculationRequest request,
+        PorkchopWindow window,
+        TransferDetails seed)
+    {
+        var depMin = window.DepartureStart;
+        var depMax = window.DepartureEnd;
+        var ttMin = window.TravelTimeMin;
+        var ttMax = window.TravelTimeMax;
+
+        double Cost(double dep, double tt)
+        {
+            dep = Math.Clamp(dep, depMin, depMax);
+            tt = Math.Clamp(tt, ttMin, ttMax);
+            
+            var t = CalculateBestTransfer(
+                origin, destination, centralBody, dep, tt,
+                request.ResolveDepartureOrbitPeriapsisAltitude(),
+                request.ResolveDepartureOrbitApoapsisAltitude(),
+                request.ArrivalParkingOrbitAltitude,
+                request.ArrivalManeuverMode,
+                request.UseAerobraking,
+                request.LongWay);
+            
+            return t?.DVTotal ?? double.MaxValue;
+        }
+
+        var depStep = Math.Max((depMax - depMin) / 200.0, 3600.0);
+        var ttStep = Math.Max((ttMax - ttMin) / 200.0, 3600.0);
+
+        var simplex = new (double dep, double tt, double cost)[3];
+        simplex[0] = (seed.DepartureTime, seed.TravelTime, Cost(seed.DepartureTime, seed.TravelTime));
+        simplex[1] = (seed.DepartureTime + depStep, seed.TravelTime, Cost(seed.DepartureTime + depStep, seed.TravelTime));
+        simplex[2] = (seed.DepartureTime, seed.TravelTime + ttStep, Cost(seed.DepartureTime, seed.TravelTime + ttStep));
+
+        for (var iter = 0; iter < 80; iter++)
+        {
+            Array.Sort(simplex, (a, b) => a.cost.CompareTo(b.cost));
+            var best = simplex[0];
+            var good = simplex[1];
+            var worst = simplex[2];
+
+            if (worst.cost < double.MaxValue && Math.Abs(worst.cost - best.cost) < 1e-6)
+            {
+                break;
+            }
+
+            var cDep = (best.dep + good.dep) / 2.0;
+            var cTt = (best.tt + good.tt) / 2.0;
+
+            // Отражение
+            var reflDep = cDep + (cDep - worst.dep);
+            var reflTt = cTt + (cTt - worst.tt);
+            var reflCost = Cost(reflDep, reflTt);
+
+            if (reflCost < best.cost)
+            {
+                // Расширение
+                var expDep = cDep + 2.0 * (cDep - worst.dep);
+                var expTt = cTt + 2.0 * (cTt - worst.tt);
+                var expCost = Cost(expDep, expTt);
+                simplex[2] = expCost < reflCost ? (expDep, expTt, expCost) : (reflDep, reflTt, reflCost);
+            }
+            else if (reflCost < good.cost)
+            {
+                simplex[2] = (reflDep, reflTt, reflCost);
+            }
+            else
+            {
+                // Сжатие
+                var contDep = cDep + 0.5 * (worst.dep - cDep);
+                var contTt = cTt + 0.5 * (worst.tt - cTt);
+                var contCost = Cost(contDep, contTt);
+                if (contCost < worst.cost)
+                {
+                    simplex[2] = (contDep, contTt, contCost);
+                }
+                else
+                {
+                    // Уменьшение симплекса (shrink)
+                    var midDep = (best.dep + good.dep) / 2.0;
+                    var midTt = (best.tt + good.tt) / 2.0;
+                    simplex[1] = (midDep, midTt, Cost(midDep, midTt));
+
+                    var shrinkDep = (best.dep + worst.dep) / 2.0;
+                    var shrinkTt = (best.tt + worst.tt) / 2.0;
+                    simplex[2] = (shrinkDep, shrinkTt, Cost(shrinkDep, shrinkTt));
+                }
+            }
+        }
+
+        Array.Sort(simplex, (a, b) => a.cost.CompareTo(b.cost));
+        var winner = simplex[0];
+        if (winner.cost >= double.MaxValue)
+        {
+            return null;
+        }
+
+        // Final verification: check both branches at the winner point to ensure
+        // we have the true best solution (in case simplex converged on one branch)
+        var finalTransfer = CalculateBestTransfer(
+            origin, destination, centralBody,
+            Math.Clamp(winner.dep, depMin, depMax),
+            Math.Clamp(winner.tt, ttMin, ttMax),
+            request.ResolveDepartureOrbitPeriapsisAltitude(),
+            request.ResolveDepartureOrbitApoapsisAltitude(),
+            request.ArrivalParkingOrbitAltitude,
+            request.ArrivalManeuverMode,
+            request.UseAerobraking,
+            request.LongWay);
+
+        return finalTransfer;
     }
 }
