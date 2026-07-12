@@ -48,7 +48,13 @@ public static class TransferCalculator
 
         // Determine the signed angle in range [0, 2π). Use this to decide
         // whether the long-way Lambert branch (angle > π) should be used.
-        var signedAngle = Math.Atan2(Vector3D.Cross(originPosition, destinationPosition).Z, Vector3D.Dot(originPosition, destinationPosition));
+        // Originally projected onto global Z-axis of the ecliptic — only works
+        // while the transfer stays close to the ecliptic plane. Now uses the normal
+        // from the origin's orbital motion direction, which correctly generalizes
+        // to inclined systems (e.g., moons of Jupiter).
+        var referenceNormal = Vector3D.Cross(originPosition, originVelocity).Normalized;
+        var transferNormal = Vector3D.Cross(originPosition, destinationPosition);
+        var signedAngle = Math.Atan2(Vector3D.Dot(transferNormal, referenceNormal), Vector3D.Dot(originPosition, destinationPosition));
         if (signedAngle < 0)
         {
             signedAngle += LambertSolver.TwoPi;
@@ -252,8 +258,12 @@ public static class TransferCalculator
     private static double PhaseAngleAtDeparture(OrbitalBody origin, OrbitalBody destination, double departureTime)
     {
         var originPosition = origin.Orbit.PositionAtTime(departureTime);
+        var originVelocity = origin.Orbit.VelocityAtTime(departureTime);
         var destinationPosition = destination.Orbit.PositionAtTime(departureTime);
-        var angle = Math.Atan2(Vector3D.Cross(originPosition, destinationPosition).Z, Vector3D.Dot(originPosition, destinationPosition));
+
+        var referenceNormal = Vector3D.Cross(originPosition, originVelocity).Normalized;
+        var transferNormal = Vector3D.Cross(originPosition, destinationPosition);
+        var angle = Math.Atan2(Vector3D.Dot(transferNormal, referenceNormal), Vector3D.Dot(originPosition, destinationPosition));
         if (angle < 0)
         {
             angle += LambertSolver.TwoPi;

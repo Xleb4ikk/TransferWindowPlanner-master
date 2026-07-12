@@ -957,6 +957,10 @@ public partial class MainWindow : Window
             maxRadius = max * 1.3;
         }
 
+        // Project coordinates for phase angle calculation using actual transfer positions
+        var (originProjectedX, originProjectedY) = ProjectPosition(originPos, cx, cy, maxRadius, scale);
+        var (destDepProjectedX, destDepProjectedY) = ProjectPosition(destPosAtDep, cx, cy, maxRadius, scale);
+
         foreach (var body in bodies)
         {
             var relevant = isRelevant.Contains(body.Name);
@@ -1056,11 +1060,21 @@ public partial class MainWindow : Window
         }
 
         // Draw arc + phase angle between origin and destination (both at departure time)
+        // Calculate angle in the XY plane (ecliptic view from above), ignoring Z coordinate
+        // This gives the visual angle when looking straight down at the solar system
         var originAng = Math.Atan2(originPos.Y, originPos.X);
         var destDepAng = Math.Atan2(destPosAtDep.Y, destPosAtDep.X);
         var rawDiff = destDepAng - originAng;
         if (rawDiff > Math.PI) rawDiff -= Core.LambertSolver.TwoPi;
         if (rawDiff < -Math.PI) rawDiff += Core.LambertSolver.TwoPi;
+        
+        // Debug output
+        System.Diagnostics.Debug.WriteLine($"Origin 3D pos: ({originPos.X:F2}, {originPos.Y:F2}, {originPos.Z:F2})");
+        System.Diagnostics.Debug.WriteLine($"Dest 3D pos: ({destPosAtDep.X:F2}, {destPosAtDep.Y:F2}, {destPosAtDep.Z:F2})");
+        System.Diagnostics.Debug.WriteLine($"Origin angle (XY plane): {originAng * Core.LambertSolver.Rad2Deg:F2}°");
+        System.Diagnostics.Debug.WriteLine($"Dest angle (XY plane): {destDepAng * Core.LambertSolver.Rad2Deg:F2}°");
+        System.Diagnostics.Debug.WriteLine($"Angular difference: {rawDiff * Core.LambertSolver.Rad2Deg:F2}°");
+        
         var arcR = Math.Min(cw, ch) * 0.12;
 
         var arcPoints = new PointCollection();

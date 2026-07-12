@@ -1,0 +1,94 @@
+{
+  "calendar": {
+    "kind": "utc",
+    "epochUtc": "2000-01-01T12:00:00Z",
+    "epochYear": 2000,
+    "epochDayOfYear": 1,
+    "daysPerYear": 365,
+    "hoursPerDay": 24,
+    "minutesPerHour": 60,
+    "secondsPerMinute": 60
+  },
+  "centralBody": {
+    "name": "Sun",
+    "gravitationalParameter": 1.3271244004127942E+20
+  },
+  "bodies": [
+    {
+      "name": "Earth",
+      "gravitationalParameter": 398600435507000,
+      "radius": 6371008.4,
+      "sphereOfInfluence": 924646955.636956,
+      "rotationPeriodSeconds": 86164.0905,
+      "orbit": {
+        "semiMajorAxis": 149597897627.61673,
+        "eccentricity": 0.01673163,
+        "inclinationDeg": -0.00054346,
+        "longitudeOfAscendingNodeDeg": -5.11260389,
+        "argumentOfPeriapsisDeg": 108.04266274,
+        "meanAnomalyAtEpochDeg": 357.53685687,
+        "epoch": 0,
+        "semiMajorAxisRate": -4487.936121,
+        "eccentricityRate": -3.661E-05,
+        "inclinationRateDegPerCentury": -0.01337178,
+        "longitudeOfAscendingNodeRateDegPerCentury": -0.24123856,
+        "longitudeOfPeriapsisDeg": 102.93005885,
+        "longitudeOfPeriapsisRateDegPerCentury": 0.3179526,
+        "meanLongitudeDeg": 100.46691572,
+        "meanLongitudeRateDegPerCentury": 35999.37306329,
+        "meanAnomalyQuadraticTermDegPerCentury2": 0,
+        "meanAnomalyCosineTermDeg": 0,
+        "meanAnomalySineTermDeg": 0,
+        "meanAnomalyFrequencyDegPerCentury": 0
+      }
+    },
+    {
+      "name": "Mars",
+      "gravitationalParameter": 42828373620000,
+      "radius": 3389500,
+      "sphereOfInfluence": 577239978.521152,
+      "rotationPeriodSeconds": 88642.6848,
+      "orbit": {
+        "semiMajorAxis": 227944135087.1228,
+        "eccentricity": 0.09336511,
+        "inclinationDeg": 1.85181869,
+        "longitudeOfAscendingNodeDeg": 49.71320984,
+        "argumentOfPeriapsisDeg": 286.36934232,
+        "meanAnomalyAtEpochDeg": 19.3493162,
+        "epoch": 0,
+        "semiMajorAxisRate": 145109.934579,
+        "eccentricityRate": 9.149E-05,
+        "inclinationRateDegPerCentury": -0.00724757,
+        "longitudeOfAscendingNodeRateDegPerCentury": -0.26852431,
+        "longitudeOfPeriapsisDeg": -23.91744784,
+        "longitudeOfPeriapsisRateDegPerCentury": 0.45223625,
+        "meanLongitudeDeg": -4.56813164,
+        "meanLongitudeRateDegPerCentury": 19140.29934243,
+        "meanAnomalyQuadraticTermDegPerCentury2": 0,
+        "meanAnomalyCosineTermDeg": 0,
+        "meanAnomalySineTermDeg": 0,
+        "meanAnomalyFrequencyDegPerCentury": 0
+      }
+    }
+  ],
+  "request": {
+    "mode": "porkchop",
+    "origin": "Earth",
+    "destination": "Mars",
+    "departureWindowStart": 838814400,
+    "departureWindowEnd": 854712000,
+    "travelTimeMin": 10368000,
+    "travelTimeMax": 31104000,
+    "departureSteps": 48,
+    "travelTimeSteps": 48,
+    "departureParkingOrbitAltitude": 200000,
+    "departureParkingOrbitPeriapsisAltitude": 200000,
+    "departureParkingOrbitApoapsisAltitude": 200000,
+    "arrivalParkingOrbitAltitude": 250000,
+    "arrivalManeuverMode": "circular-capture",
+    "useAerobraking": false,
+    "longWay": true,
+    "csvOutputPath": "data/results/earth-mars-porkchop-long.csv",
+    "resultOutputPath": "data/results/earth-mars-porkchop-long.json"
+  }
+}

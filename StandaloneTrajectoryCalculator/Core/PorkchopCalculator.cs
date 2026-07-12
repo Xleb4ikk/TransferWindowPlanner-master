@@ -67,6 +67,8 @@ public static class PorkchopCalculator
             : (window.TravelTimeMax - window.TravelTimeMin) / (window.TravelTimeSteps - 1);
 
         TransferDetails? bestTransfer = null;
+        TransferDetails? bestShortWay = null;
+        TransferDetails? bestLongWay = null;
         var validPoints = 0;
         var invalidPoints = 0;
 
@@ -78,18 +80,59 @@ public static class PorkchopCalculator
             {
                 var travelTime = window.TravelTimeMin + y * travelResolution;
                 
-                var transfer = CalculateBestTransfer(
-                    origin,
-                    destination,
-                    centralBody,
-                    departureTime,
-                    travelTime,
-                    request.ResolveDepartureOrbitPeriapsisAltitude(),
-                    request.ResolveDepartureOrbitApoapsisAltitude(),
-                    request.ArrivalParkingOrbitAltitude,
-                    request.ArrivalManeuverMode,
-                    request.UseAerobraking,
-                    request.LongWay);
+                TransferDetails? shortWayTransfer = null;
+                TransferDetails? longWayTransfer = null;
+
+                // In "auto" mode (request.LongWay == null) evaluate BOTH Lambert
+                // branches at every grid point and keep the cheaper one. Relying
+                // on whichever branch is geometrically "natural" at a point (the
+                // single-branch auto-resolution inside CalculateTransfer) can
+                // silently hide a cheaper solution that exists on the other branch.
+                if (request.LongWay is null or false)
+                {
+                    try
+                    {
+                        shortWayTransfer = TransferCalculator.CalculateTransfer(
+                            origin, destination, centralBody, departureTime, travelTime,
+                            request.ResolveDepartureOrbitPeriapsisAltitude(),
+                            request.ResolveDepartureOrbitApoapsisAltitude(),
+                            request.ArrivalParkingOrbitAltitude,
+                            request.ArrivalManeuverMode,
+                            request.UseAerobraking,
+                            false);
+                    }
+                    catch
+                    {
+                        shortWayTransfer = null;
+                    }
+                }
+
+                if (request.LongWay is null or true)
+                {
+                    try
+                    {
+                        longWayTransfer = TransferCalculator.CalculateTransfer(
+                            origin, destination, centralBody, departureTime, travelTime,
+                            request.ResolveDepartureOrbitPeriapsisAltitude(),
+                            request.ResolveDepartureOrbitApoapsisAltitude(),
+                            request.ArrivalParkingOrbitAltitude,
+                            request.ArrivalManeuverMode,
+                            request.UseAerobraking,
+                            true);
+                    }
+                    catch
+                    {
+                        longWayTransfer = null;
+                    }
+                }
+
+                var transfer = (shortWayTransfer, longWayTransfer) switch
+                {
+                    (not null, not null) => shortWayTransfer.DVTotal <= longWayTransfer.DVTotal ? shortWayTransfer : longWayTransfer,
+                    (not null, null) => shortWayTransfer,
+                    (null, not null) => longWayTransfer,
+                    _ => null
+                };
 
                 if (transfer is null)
                 {
@@ -117,6 +160,16 @@ public static class PorkchopCalculator
                 {
                     bestTransfer = transfer;
                 }
+
+                if (shortWayTransfer is not null && (bestShortWay is null || shortWayTransfer.DVTotal < bestShortWay.DVTotal))
+                {
+                    bestShortWay = shortWayTransfer;
+                }
+
+                if (longWayTransfer is not null && (bestLongWay is null || longWayTransfer.DVTotal < bestLongWay.DVTotal))
+                {
+                    bestLongWay = longWayTransfer;
+                }
             }
         }
 
@@ -125,13 +178,40 @@ public static class PorkchopCalculator
             throw new InvalidOperationException("No valid transfers were found in the porkchop window.");
         }
 
-        // Grid scan gives a result only at grid nodes (e.g., ~11-day step with
-        // 80 steps across a 2.5-year window). Refine with a local simplex search
-        // around the best grid point to find the true dV minimum.
-        var refined = RefineBestTransfer(origin, destination, centralBody, request, window, bestTransfer);
-        if (refined is not null && refined.DVTotal <= bestTransfer.DVTotal)
+        // Grid scan gives a result only at grid nodes. Refine with a local simplex
+        // search around the best grid point to find the true dV minimum. In auto
+        // mode, refine each branch independently — Nelder-Mead can't cross the
+        // long/short-way boundary since Cost() holds longWay fixed — then keep
+        // whichever refined branch is cheaper.
+        if (request.LongWay is null)
         {
-            bestTransfer = refined;
+            var refinedShort = bestShortWay is not null
+                ? RefineBestTransfer(origin, destination, centralBody, request, window, bestShortWay)
+                : null;
+            var refinedLong = bestLongWay is not null
+                ? RefineBestTransfer(origin, destination, centralBody, request, window, bestLongWay)
+                : null;
+
+            TransferDetails? finalBest = refinedShort ?? bestShortWay;
+
+            var longCandidate = refinedLong ?? bestLongWay;
+            if (longCandidate is not null && (finalBest is null || longCandidate.DVTotal < finalBest.DVTotal))
+            {
+                finalBest = longCandidate;
+            }
+
+            if (finalBest is not null)
+            {
+                bestTransfer = finalBest;
+            }
+        }
+        else
+        {
+            var refined = RefineBestTransfer(origin, destination, centralBody, request, window, bestTransfer);
+            if (refined is not null && refined.DVTotal <= bestTransfer.DVTotal)
+            {
+                bestTransfer = refined;
+            }
         }
 
         return new PorkchopResult
