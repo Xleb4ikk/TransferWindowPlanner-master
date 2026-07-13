@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace StandaloneTrajectoryCalculator.Gui;
+namespace TrajectoryCalculator.Gui;
 
 internal enum UiLanguage
 {

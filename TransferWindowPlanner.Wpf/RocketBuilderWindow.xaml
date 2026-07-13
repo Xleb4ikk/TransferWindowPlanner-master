@@ -1,4 +1,4 @@
-﻿<Window x:Class="StandaloneTrajectoryCalculator.Gui.RocketBuilderWindow"
+﻿<Window x:Class="TrajectoryCalculator.Gui.RocketBuilderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Rocket Builder AI" Width="1460" Height="940" MinWidth="1180" MinHeight="760"

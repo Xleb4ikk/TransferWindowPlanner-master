@@ -19,6 +19,7 @@ env/
 **/obj/
 build/
 dist/
+.nupkg/
 
 # Python packaging
 *.egg-info/

@@ -1,5 +1,5 @@
 using System.Globalization;
-namespace StandaloneTrajectoryCalculator;
+using TrajectoryCalculator;
 
 internal static class Program
 {

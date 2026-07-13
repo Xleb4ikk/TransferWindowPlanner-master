@@ -3,9 +3,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
-using Core = StandaloneTrajectoryCalculator;
+using Core = TrajectoryCalculator;
 
-namespace StandaloneTrajectoryCalculator.Gui;
+namespace TrajectoryCalculator.Gui;
 
 public partial class RocketBuilderWindow : Window
 {

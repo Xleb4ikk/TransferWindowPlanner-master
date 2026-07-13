@@ -5,11 +5,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Win32;
-using Core = StandaloneTrajectoryCalculator;
+using Core = TrajectoryCalculator;
 
 namespace TransferWindowPlanner.Wpf;
 
-using Gui = StandaloneTrajectoryCalculator.Gui;
+using Gui = TrajectoryCalculator.Gui;
 
 public partial class MainWindow : Window
 {
@@ -225,6 +225,12 @@ public partial class MainWindow : Window
         }
 
         var form = new Gui.RocketBuilderWindow(seed) { Owner = this };
+        form.ShowDialog();
+    }
+
+    private void Batch_Click(object sender, RoutedEventArgs e)
+    {
+        var form = new Gui.BatchWindow { Owner = this };
         form.ShowDialog();
     }
 

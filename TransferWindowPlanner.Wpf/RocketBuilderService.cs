@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 
-namespace StandaloneTrajectoryCalculator.Gui;
+namespace TrajectoryCalculator.Gui;
 
 public class RocketBuilderService
 {

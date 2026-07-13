@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrajectoryCalculator.Core", "TrajectoryCalculator.Core\TrajectoryCalculator.Core.csproj", "{8A4E2F91-5B7C-4D3E-9F1A-2C6D8E7F0B1A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StandaloneTrajectoryCalculator", "StandaloneTrajectoryCalculator\StandaloneTrajectoryCalculator.csproj", "{03A827B1-5E30-4C07-A315-0721A78ABE7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransferWindowPlanner.Wpf", "TransferWindowPlanner.Wpf\TransferWindowPlanner.Wpf.csproj", "{B7273204-D490-487B-BB5C-7FB33FD26A33}"

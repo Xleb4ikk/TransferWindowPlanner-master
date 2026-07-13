@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace StandaloneTrajectoryCalculator.Gui;
+namespace TrajectoryCalculator.Gui;
 
 public static class RocketBuilderDefaults
 {
