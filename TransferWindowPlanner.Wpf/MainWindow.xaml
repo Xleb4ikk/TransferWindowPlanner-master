@@ -136,7 +136,7 @@
                             <ComboBox x:Name="OriginCombo" Style="{StaticResource ModernComboBoxStyle}" Margin="0,0,0,12"/>
 
                             <TextBlock x:Name="LblDestination" Style="{StaticResource FieldLabelStyle}">Destination Planet</TextBlock>
-                            <ComboBox x:Name="DestinationCombo" Style="{StaticResource ModernComboBoxStyle}" Margin="0,0,0,12"/>
+                            <ComboBox x:Name="DestinationCombo" Style="{StaticResource ModernComboBoxStyle}" Margin="0,0,0,12" SelectionChanged="Destination_SelectionChanged"/>
 
                             <TextBlock x:Name="LblMode" Style="{StaticResource FieldLabelStyle}">Calculation Mode</TextBlock>
                             <ComboBox x:Name="ModeCombo" Style="{StaticResource ModernComboBoxStyle}" Margin="0,0,0,12" SelectionChanged="Mode_SelectionChanged"/>
@@ -226,6 +226,10 @@
                             <CheckBox x:Name="AerobrakingCheck"
                                       Content="Use Aerobraking"
                                       Style="{StaticResource ModernCheckBoxStyle}"/>
+                            <TextBlock x:Name="AerobrakingNote"
+                                       Style="{StaticResource MutedTextStyle}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,2,0,0" />
                         </StackPanel>
                     </Border>
 

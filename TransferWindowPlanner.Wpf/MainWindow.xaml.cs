@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -171,7 +172,7 @@ public partial class MainWindow : Window
             });
 
             _lastResult = result;
-            SummaryBox.Text = result.ConsoleSummary;
+            SummaryBox.Text = LocalizeSummary(result.ConsoleSummary);
             WrittenFilesBox.Text = result.WrittenFiles.Count == 0
                 ? T("text.no_files_written")
                 : string.Join(Environment.NewLine, result.WrittenFiles);
@@ -438,6 +439,7 @@ public partial class MainWindow : Window
             }
 
             AerobrakingCheck.IsChecked = scenario.Request.UseAerobraking;
+            UpdateAerobrakingState();
 
             if (scenario.Request.Launch is { } launch)
             {
@@ -485,6 +487,182 @@ public partial class MainWindow : Window
         if (jsonFile != null && System.IO.File.Exists(jsonFile))
             return System.IO.File.ReadAllText(jsonFile);
         return T("text.no_result_json");
+    }
+
+    private void Destination_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) =>
+        UpdateAerobrakingState();
+
+    private void UpdateAerobrakingState()
+    {
+        var dest = SelectedPlanet(DestinationCombo);
+        var supported = dest.Contains("Earth", StringComparison.OrdinalIgnoreCase) ||
+                        dest.Contains("Venus", StringComparison.OrdinalIgnoreCase);
+        AerobrakingCheck.IsEnabled = supported;
+        if (!supported)
+            AerobrakingCheck.IsChecked = false;
+    }
+
+    private static readonly Dictionary<string, string> _planetRu = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Mercury"] = "Меркурий",
+        ["Venus"] = "Венера",
+        ["Earth"] = "Земля",
+        ["Mars"] = "Марс",
+        ["Jupiter"] = "Юпитер",
+        ["Saturn"] = "Сатурн",
+        ["Uranus"] = "Уран",
+        ["Neptune"] = "Нептун",
+    };
+
+    private string LocalizeSummary(string text)
+    {
+        if (_language == Gui.UiLanguage.English)
+            return text;
+
+        // Pre-process: translate planet names
+        foreach (var (en, ru) in _planetRu)
+            text = text.Replace(en, ru);
+
+        // Pre-process: arrow
+        text = text.Replace(" -> ", " → ");
+
+        var lines = text.Split('\n');
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var raw = lines[i];
+            if (raw.Length > 0 && raw[^1] == '\r')
+                raw = raw[..^1];
+            lines[i] = LocalizeLine(raw);
+        }
+        var result = string.Join("\r\n", lines);
+        result = result.Replace(" UTC", " UT");
+        return result;
+    }
+
+    private string LocalizeLine(string line)
+    {
+        if (string.IsNullOrWhiteSpace(line))
+            return line;
+
+        // === [mode] Surface to Orbit: Planet === (planet already translated)
+        var match = Regex.Match(line, @"^=== \[(quick|rocket-aware)\] Surface to Orbit: (.+?) ===$");
+        if (match.Success)
+            return $"=== [{match.Groups[1].Value}] {T("ascent.title")} {match.Groups[2].Value} ===";
+
+        // Label-based lines — replace English label with localized, then translate values
+        var labelMap = new (string label, string key)[]
+        {
+            ("Long-way transfer: ", "summary.long_way"),
+            ("Depart at:        ", "summary.depart_at"),
+            ("Departure UT:     ", "summary.departure_ut"),
+            ("Travel time:      ", "summary.travel_time"),
+            ("Travel UT:        ", "summary.travel_ut"),
+            ("Arrive at:        ", "summary.arrive_at"),
+            ("Arrival UT:       ", "summary.arrival_ut"),
+            ("Phase angle:      ", "summary.phase_angle"),
+            ("Transfer angle:   ", "summary.transfer_angle"),
+            ("Ejection inc.:    ", "summary.ejection_inc"),
+            ("Departure orbit:  ", "summary.departure_orbit"),
+            ("Ejection dV:      ", "summary.ejection_dv"),
+            ("Ejection angle:   ", "summary.ejection_angle"),
+            ("Prograde dV:      ", "summary.prograde_dv"),
+            ("Normal dV:        ", "summary.normal_dv"),
+            ("Heading:          ", "summary.heading"),
+            ("Arrival mode:     ", "summary.arrival_mode"),
+            ("Capture periapsis:", "summary.capture_periapsis"),
+            ("Capture apoapsis: ", "summary.capture_apoapsis"),
+            ("Insertion inc.:   ", "summary.insertion_inc"),
+            ("Insertion dV:     ", "summary.insertion_dv"),
+            ("Total dV:         ", "summary.total_dv"),
+            ("Mission total dV:  ", "summary.mission_total_dv"),
+            ("Departure window: ", "summary.departure_window"),
+            ("Travel window:    ", "summary.travel_window"),
+            ("Grid size:        ", "summary.grid_size"),
+            ("Valid points:     ", "summary.valid_points"),
+            ("Invalid points:   ", "summary.invalid_points"),
+            ("Hohmann TOF:      ", "summary.hohmann_tof"),
+            ("Synodic period:   ", "summary.synodic_period"),
+            ("Launch time:      ", "launch.launch_time"),
+            ("Liftoff to burn:  ", "launch.liftoff_to_burn"),
+            ("Ascent lead:      ", "launch.ascent_lead"),
+            ("Parking coast:    ", "launch.parking_coast"),
+            ("Coast breakdown:  ", "launch.coast_breakdown"),
+            ("Launch azimuth:   ", "launch.azimuth"),
+            ("Plane node:       ", "launch.plane_node"),
+            ("Plane incl.:      ", "launch.plane_inclination"),
+            ("Plane RAAN:       ", "launch.plane_raan"),
+            ("Launch longitude: ", "launch.longitude"),
+            ("Ejection decl.:   ", "launch.ejection_declination"),
+            ("Target orbit:     ", "ascent.target_orbit"),
+            ("Inclination:      ", "ascent.inclination"),
+            ("Status:           ", "ascent.status"),
+            ("Required dV:      ", "ascent.required_dv"),
+            ("Ideal dV:         ", "ascent.ideal_dv"),
+            ("Gravity losses:   ", "ascent.gravity_losses"),
+            ("Time to orbit:    ", "ascent.time_to_orbit"),
+            ("Reached altitude: ", "ascent.reached_altitude"),
+            ("Reached velocity: ", "ascent.reached_velocity"),
+        };
+
+        foreach (var (engLabel, key) in labelMap)
+        {
+            if (line.StartsWith(engLabel))
+            {
+                var rest = line[engLabel.Length..];
+                return T(key) + " " + LocalizeValue(rest);
+            }
+        }
+
+        // Whole-line phrases
+        if (line == "Porkchop scan completed")
+            return T("summary.porkchop_header");
+        if (line == "Best transfer:")
+            return T("summary.best_transfer");
+
+        // Surface launch window lines
+        if (line.StartsWith("Surface launch window: unavailable"))
+            return T("launch.surface_window_unavailable");
+        if (line.StartsWith("Surface launch window:"))
+            return T("launch.surface_window");
+        if (line == "Surface launch timing is unavailable.")
+            return T("launch.timing_unavailable");
+        if (line.StartsWith("Fallback window with suggested inclination:"))
+            return T("launch.fallback_window");
+        if (line.StartsWith("Try target inclination:"))
+            return T("launch.try_inclination") + line["Try target inclination:".Length..];
+
+        return line;
+    }
+
+    private string LocalizeValue(string value)
+    {
+        // Phase angle with separation: "X.XX deg (Y.YY deg separation)" → "X.XX° (расхождение: Y.YY°)"
+        value = Regex.Replace(value, @"(\d+\.\d+) deg \((\d+\.\d+) deg separation\)", "$1° (расхождение: $2°)");
+
+        value = value.Replace(" deg", "°");
+        value = value.Replace("° inertial", T("launch.deg_inertial"));
+        value = value.Replace("to prograde", T("summary.to_prograde"));
+        value = value.Replace("to retrograde", T("summary.to_retrograde"));
+        value = value.Replace("high-elliptic capture", T("option.arrival.elliptic"));
+        value = value.Replace("circular capture", T("option.arrival.circular"));
+        value = value.Replace("aerobraking", T("option.arrival.aerobraking"));
+        value = value.Replace("flyby", T("option.arrival.flyby"));
+        value = value.Replace("ignore arrival burn", T("option.arrival.ignore"));
+        value = value.Replace("ascending", T("launch.node_ascending"));
+        value = value.Replace("descending", T("launch.node_descending"));
+        value = value.Replace("success", T("ascent.success"));
+        value = value.Replace("failed", T("ascent.failed"));
+        value = value.Replace(" orbit(s)", " витк.");
+        value = value.Replace(" m/s", " м/с");
+        value = value.Replace(" km", " км");
+        value = value.Replace(" s", " с");
+        value = value.Replace("yes", T("summary.yes"));
+        value = value.Replace("no", T("summary.no"));
+
+        // Replace decimal dot with comma for Russian locale
+        value = Regex.Replace(value, @"\b(\d+)\.(\d+)\b", "$1,$2");
+
+        return value;
     }
 
     private string SelectedPlanet(ComboBox combo) =>
@@ -558,6 +736,7 @@ public partial class MainWindow : Window
         LblArrivalMode.Text = T("field.arrival_mode");
         LblArrivalOrbit.Text = T("field.arrival_parking_orbit");
         AerobrakingCheck.Content = T("field.aerobraking");
+        AerobrakingNote.Text = T("field.aerobraking_note");
 
         CardLaunch.Text = T("group.launch_config");
         LblMissionStart.Text = T("field.launch_enabled");
@@ -631,11 +810,11 @@ public partial class MainWindow : Window
         DvTotalValue.Text = $"{best.DVTotal:F1}";
         DvEjectionValue.Text = $"{best.DVEjection:F1}";
         DvInsertionValue.Text = $"{best.DVInjection:F1}";
-        DvDepartureInfo.Text = $"Depart: {cal.FormatDate(best.DepartureTime)}";
-        DvTravelInfo.Text = $"Travel: {cal.FormatDuration(best.TravelTime)}";
+        DvDepartureInfo.Text = $"{T("summary.depart_at")} {cal.FormatDate(best.DepartureTime)}";
+        DvTravelInfo.Text = $"{T("summary.travel_time")} {cal.FormatDuration(best.TravelTime)}";
         var phaseDeg = best.PhaseAngle * Core.LambertSolver.Rad2Deg;
         var sepDeg = best.DepartureSeparation * Core.LambertSolver.Rad2Deg;
-        DvPhaseInfo.Text = $"Phase: {phaseDeg:F2} deg ({sepDeg:F2} sep)";
+        DvPhaseInfo.Text = $"{T("summary.phase_angle")} {phaseDeg:F2}° ({T("summary.sep")}: {sepDeg:F2}°)";
 
         if (porkchop != null)
         {
@@ -1174,18 +1353,20 @@ public partial class MainWindow : Window
 
         // Info panel
         SolarTitle.Text = $"{transfer.OriginName} → {transfer.DestinationName}";
-        SolarPhaseInfo.Text = $"Phase angle: {transfer.PhaseAngle * Core.LambertSolver.Rad2Deg:F2}° ({transfer.DepartureSeparation * Core.LambertSolver.Rad2Deg:F2}° sep)";
-        SolarDepartureInfo.Text = $"Depart: {cal.FormatDate(transfer.DepartureTime)}";
-        SolarTravelInfo.Text = $"Travel: {cal.FormatDuration(transfer.TravelTime)}";
-        SolarLongWayInfo.Text = $"Long-way: {(transfer.LongWay ? "yes" : "no")}";
+        var phaseDeg = transfer.PhaseAngle * Core.LambertSolver.Rad2Deg;
+        var sepDeg = transfer.DepartureSeparation * Core.LambertSolver.Rad2Deg;
+        SolarPhaseInfo.Text = $"{T("summary.phase_angle")} {phaseDeg:F2}° ({T("summary.sep")}: {sepDeg:F2}°)";
+        SolarDepartureInfo.Text = $"{T("summary.depart_at")} {cal.FormatDate(transfer.DepartureTime)}";
+        SolarTravelInfo.Text = $"{T("summary.travel_time")} {cal.FormatDuration(transfer.TravelTime)}";
+        SolarLongWayInfo.Text = $"{T("summary.long_way")} {(transfer.LongWay ? T("summary.yes") : T("summary.no"))}";
         SolarNote.Text = _solarShowAllBodies
-            ? "All planets shown; non-essential bodies are dimmed."
-            : "Only origin/destination bodies shown. Check 'Show all planets' for full system.";
+            ? T("visual.solar.all_planets_note")
+            : T("visual.solar.only_origin_dest_note");
 
         SolarLegend.Children.Clear();
-        AddLegendItem(originColor, $"{transfer.OriginName} at departure");
-        AddLegendItem(destColor, $"{transfer.DestinationName} at arrival");
-        AddLegendLine(Color.FromRgb(0x4C, 0xAF, 0x50), "Transfer path");
+        AddLegendItem(originColor, $"{transfer.OriginName} {T("visual.solar.at_departure")}");
+        AddLegendItem(destColor, $"{transfer.DestinationName} {T("visual.solar.at_arrival")}");
+        AddLegendLine(Color.FromRgb(0x4C, 0xAF, 0x50), T("visual.solar.transfer_path"));
 
         SolarInfoPanel.Visibility = Visibility.Visible;
     }

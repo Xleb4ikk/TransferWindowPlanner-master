@@ -15,8 +15,10 @@ public sealed class BatchItemResult
     public string Origin { get; set; } = string.Empty;
     public string Destination { get; set; } = string.Empty;
     public string DepartureDate { get; set; } = string.Empty;
+    public string ArrivalDate { get; set; } = string.Empty;
     public string TravelDuration { get; set; } = string.Empty;
     public double DVTransferTotal { get; set; }
+    public double DVInjection { get; set; }
     public double MissionTotalDeltaV { get; set; }
     public double ElapsedMs { get; set; }
     public string ErrorMessage { get; set; } = string.Empty;
@@ -56,8 +58,15 @@ public static class BatchCalculator
     public static BatchRunResult RunFolder(string folderPath, bool recursive, Options options)
     {
         var searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-        var files = Directory.GetFiles(folderPath, "*.json", searchOption);
-        return RunFiles([.. files], options);
+        var files = Directory.GetFiles(folderPath, "*.json", searchOption)
+            .Where(f =>
+            {
+                var name = Path.GetFileName(f);
+                return !name.Equals("manifest.json", StringComparison.OrdinalIgnoreCase)
+                    && !name.Equals("batch-summary.json", StringComparison.OrdinalIgnoreCase);
+            })
+            .ToList();
+        return RunFiles(files, options);
     }
 
     public static BatchRunResult RunManifestFile(string manifestPath, Options options)
@@ -72,10 +81,10 @@ public static class BatchCalculator
     public static void WriteSummaryCsv(BatchRunResult result, string path)
     {
         using var writer = new StreamWriter(path, false);
-        writer.WriteLine("Index,Id,Status,Mode,Origin,Destination,DepartureDate,TravelTime,DVTransfer,DVMission,ElapsedMs,Error");
+        writer.WriteLine("Index,Id,Status,Mode,Origin,Destination,DepartureDate,ArrivalDate,TravelTime,DVTransfer,DVInjection,DVMission,ElapsedMs,Error");
         foreach (var item in result.Items)
         {
-            writer.WriteLine($"{item.Index},{EscapeCsv(item.Id)},{item.StatusText},{EscapeCsv(item.Mode)},{EscapeCsv(item.Origin)},{EscapeCsv(item.Destination)},{EscapeCsv(item.DepartureDate)},{EscapeCsv(item.TravelDuration)},{item.DVTransferTotal:F1},{item.MissionTotalDeltaV:F1},{item.ElapsedMs:F0},{EscapeCsv(item.ErrorMessage)}");
+            writer.WriteLine($"{item.Index},{EscapeCsv(item.Id)},{item.StatusText},{EscapeCsv(item.Mode)},{EscapeCsv(item.Origin)},{EscapeCsv(item.Destination)},{EscapeCsv(item.DepartureDate)},{EscapeCsv(item.ArrivalDate)},{EscapeCsv(item.TravelDuration)},{item.DVTransferTotal:F1},{item.DVInjection:F1},{item.MissionTotalDeltaV:F1},{item.ElapsedMs:F0},{EscapeCsv(item.ErrorMessage)}");
         }
     }
 
@@ -115,11 +124,13 @@ public static class BatchCalculator
                 itemResult.Mode = execResult.Mode;
                 itemResult.Origin = input.Request?.Origin ?? "";
                 itemResult.Destination = input.Request?.Destination ?? "";
-                itemResult.DVTransferTotal = execResult.Transfer?.DVTotal ?? 0;
+                itemResult.DVTransferTotal = execResult.Transfer?.DVEjection ?? 0;
+                itemResult.DVInjection = execResult.Transfer?.DVInjection ?? 0;
                 itemResult.MissionTotalDeltaV = (execResult.Transfer?.DVTotal ?? 0) + (execResult.Launch?.RequiredDeltaVMps ?? 0);
                 if (execResult.Calendar is not null && execResult.Transfer is not null)
                 {
                     itemResult.DepartureDate = execResult.Calendar.FormatDate(execResult.Transfer.DepartureTime);
+                    itemResult.ArrivalDate = execResult.Calendar.FormatDate(execResult.Transfer.DepartureTime + execResult.Transfer.TravelTime);
                     itemResult.TravelDuration = execResult.Calendar.FormatDuration(execResult.Transfer.TravelTime);
                 }
             }
