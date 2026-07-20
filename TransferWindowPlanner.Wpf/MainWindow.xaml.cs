@@ -44,8 +44,9 @@ public partial class MainWindow : Window
     {
         foreach (var name in Core.SolarSystemCatalog.PlanetNames)
         {
-            OriginCombo.Items.Add(name);
-            DestinationCombo.Items.Add(name);
+            var label = Gui.UiTextCatalog.PlanetName(name, _language);
+            OriginCombo.Items.Add(new ChoiceItem(name, label));
+            DestinationCombo.Items.Add(new ChoiceItem(name, label));
         }
         if (OriginCombo.Items.Count > 2) OriginCombo.SelectedIndex = 2;
         if (DestinationCombo.Items.Count > 3) DestinationCombo.SelectedIndex = 3;
@@ -262,7 +263,30 @@ public partial class MainWindow : Window
         if (lang == _language) return;
         _language = lang;
         ApplyLanguage();
-        PopulateChoices();
+        _suspendUpdate = true;
+        try { PopulateChoices(); }
+        finally { _suspendUpdate = false; }
+        RefreshPlanetLabels(OriginCombo);
+        RefreshPlanetLabels(DestinationCombo);
+    }
+
+    private void RefreshPlanetLabels(ComboBox combo)
+    {
+        var selectedKey = combo.SelectedItem is ChoiceItem ci ? ci.Key : null;
+        var items = new List<ChoiceItem>();
+        foreach (ChoiceItem item in combo.Items)
+            items.Add(new ChoiceItem(item.Key, Gui.UiTextCatalog.PlanetName(item.Key, _language)));
+        combo.Items.Clear();
+        foreach (var item in items)
+            combo.Items.Add(item);
+        if (selectedKey != null)
+        {
+            foreach (ChoiceItem item in combo.Items)
+            {
+                if (item.Key == selectedKey) { combo.SelectedItem = item; return; }
+            }
+        }
+        if (combo.Items.Count > 0) combo.SelectedIndex = 0;
     }
 
     private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -502,26 +526,14 @@ public partial class MainWindow : Window
             AerobrakingCheck.IsChecked = false;
     }
 
-    private static readonly Dictionary<string, string> _planetRu = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["Mercury"] = "Меркурий",
-        ["Venus"] = "Венера",
-        ["Earth"] = "Земля",
-        ["Mars"] = "Марс",
-        ["Jupiter"] = "Юпитер",
-        ["Saturn"] = "Сатурн",
-        ["Uranus"] = "Уран",
-        ["Neptune"] = "Нептун",
-    };
-
     private string LocalizeSummary(string text)
     {
         if (_language == Gui.UiLanguage.English)
             return text;
 
         // Pre-process: translate planet names
-        foreach (var (en, ru) in _planetRu)
-            text = text.Replace(en, ru);
+        foreach (var name in Core.SolarSystemCatalog.PlanetNames)
+            text = text.Replace(name, Gui.UiTextCatalog.PlanetName(name, _language));
 
         // Pre-process: arrow
         text = text.Replace(" -> ", " → ");
@@ -665,8 +677,8 @@ public partial class MainWindow : Window
         return value;
     }
 
-    private string SelectedPlanet(ComboBox combo) =>
-        combo.SelectedItem?.ToString() ?? "Earth";
+    private static string SelectedPlanet(ComboBox combo) =>
+        combo.SelectedItem is ChoiceItem ci ? ci.Key : (combo.SelectedItem?.ToString() ?? "Earth");
 
     private static void SelectChoice(ComboBox combo, string? key)
     {
@@ -759,6 +771,7 @@ public partial class MainWindow : Window
         TabScenarioJson.Header = T("tab.scenario_json");
         TabResultJson.Header = T("tab.result_json");
 
+        SolarShowAllCheck.Content = T("visual.solar.show_all");
         SummaryBox.Text = T("status.ready");
     }
 
@@ -1185,7 +1198,7 @@ public partial class MainWindow : Window
 
                 SolarCanvas.Children.Add(new TextBlock
                 {
-                    Text = body.Name,
+                    Text = Gui.UiTextCatalog.PlanetName(body.Name, _language),
                     FontSize = 8,
                     Foreground = new SolidColorBrush(Color.FromArgb(100, orbitColor.R, orbitColor.G, orbitColor.B)),
                     FontFamily = (FontFamily)FindResource("PrimaryFont")
@@ -1224,7 +1237,7 @@ public partial class MainWindow : Window
 
                 SolarCanvas.Children.Add(new TextBlock
                 {
-                    Text = body.Name,
+                    Text = Gui.UiTextCatalog.PlanetName(body.Name, _language),
                     FontSize = 10,
                     Foreground = new SolidColorBrush(orbitColor),
                     FontFamily = (FontFamily)FindResource("PrimaryFont")
@@ -1352,7 +1365,7 @@ public partial class MainWindow : Window
         Canvas.SetTop(SolarCanvas.Children[^1], cy - 10);
 
         // Info panel
-        SolarTitle.Text = $"{transfer.OriginName} → {transfer.DestinationName}";
+        SolarTitle.Text = $"{Gui.UiTextCatalog.PlanetName(transfer.OriginName, _language)} → {Gui.UiTextCatalog.PlanetName(transfer.DestinationName, _language)}";
         var phaseDeg = transfer.PhaseAngle * Core.LambertSolver.Rad2Deg;
         var sepDeg = transfer.DepartureSeparation * Core.LambertSolver.Rad2Deg;
         SolarPhaseInfo.Text = $"{T("summary.phase_angle")} {phaseDeg:F2}° ({T("summary.sep")}: {sepDeg:F2}°)";
@@ -1364,8 +1377,8 @@ public partial class MainWindow : Window
             : T("visual.solar.only_origin_dest_note");
 
         SolarLegend.Children.Clear();
-        AddLegendItem(originColor, $"{transfer.OriginName} {T("visual.solar.at_departure")}");
-        AddLegendItem(destColor, $"{transfer.DestinationName} {T("visual.solar.at_arrival")}");
+        AddLegendItem(originColor, $"{Gui.UiTextCatalog.PlanetName(transfer.OriginName, _language)} {T("visual.solar.at_departure")}");
+        AddLegendItem(destColor, $"{Gui.UiTextCatalog.PlanetName(transfer.DestinationName, _language)} {T("visual.solar.at_arrival")}");
         AddLegendLine(Color.FromRgb(0x4C, 0xAF, 0x50), T("visual.solar.transfer_path"));
 
         SolarInfoPanel.Visibility = Visibility.Visible;

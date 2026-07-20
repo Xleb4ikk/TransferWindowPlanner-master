@@ -72,22 +72,27 @@
                                VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="BtnSingleTemplate" Content="Single Template" Style="{StaticResource SecondaryButtonStyle}"
-                            Padding="14,7" Margin="0,0,6,0" Click="SingleTemplate_Click"/>
-                    <Button x:Name="BtnPorkchopTemplate" Content="Porkchop Template" Style="{StaticResource SecondaryButtonStyle}"
-                            Padding="14,7" Margin="0,0,6,0" Click="PorkchopTemplate_Click"/>
-                    <Button x:Name="BtnOpenJson" Content="Open JSON" Style="{StaticResource SecondaryButtonStyle}"
-                            Padding="14,7" Margin="0,0,6,0" Click="OpenJson_Click"/>
-                    <Button x:Name="BtnSaveJson" Content="Save JSON" Style="{StaticResource SecondaryButtonStyle}"
-                            Padding="14,7" Margin="0,0,6,0" Click="SaveJson_Click"/>
-                    <Button x:Name="BtnRun" Content="► Run" Style="{StaticResource RunButtonStyle}"
-                            Margin="0,0,6,0" Click="RunCalculation_Click"/>
-                    <Button x:Name="BtnRocketBuilder" Content="AI Rocket Builder" Style="{StaticResource RocketButtonStyle}"
-                            Click="RocketBuilder_Click"/>
-                    <Button x:Name="BtnBatch" Content="Batch Calculation" Style="{StaticResource SecondaryButtonStyle}"
-                            Padding="14,7" Margin="6,0,0,0" Click="Batch_Click"/>
-                </StackPanel>
+                <ScrollViewer Grid.Column="1"
+                              HorizontalScrollBarVisibility="Auto"
+                              VerticalScrollBarVisibility="Disabled"
+                              Style="{StaticResource HeaderScrollViewerStyle}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="BtnSingleTemplate" Content="Single Template" Style="{StaticResource SecondaryButtonStyle}"
+                                MinWidth="100" Padding="14,7" Margin="0,0,6,0" Click="SingleTemplate_Click"/>
+                        <Button x:Name="BtnPorkchopTemplate" Content="Porkchop Template" Style="{StaticResource SecondaryButtonStyle}"
+                                MinWidth="120" Padding="14,7" Margin="0,0,6,0" Click="PorkchopTemplate_Click"/>
+                        <Button x:Name="BtnOpenJson" Content="Open JSON" Style="{StaticResource SecondaryButtonStyle}"
+                                MinWidth="90" Padding="14,7" Margin="0,0,6,0" Click="OpenJson_Click"/>
+                        <Button x:Name="BtnSaveJson" Content="Save JSON" Style="{StaticResource SecondaryButtonStyle}"
+                                MinWidth="90" Padding="14,7" Margin="0,0,6,0" Click="SaveJson_Click"/>
+                        <Button x:Name="BtnRun" Content="► Run" Style="{StaticResource RunButtonStyle}"
+                                MinWidth="90" Margin="0,0,6,0" Click="RunCalculation_Click"/>
+                        <Button x:Name="BtnRocketBuilder" Content="AI Rocket Builder" Style="{StaticResource RocketButtonStyle}"
+                                MinWidth="130" Margin="0,0,6,0" Click="RocketBuilder_Click"/>
+                        <Button x:Name="BtnBatch" Content="Batch Calculation" Style="{StaticResource SecondaryButtonStyle}"
+                                MinWidth="120" Padding="14,7" Click="Batch_Click"/>
+                    </StackPanel>
+                </ScrollViewer>
 
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBlock x:Name="LblLanguage" Text="Language:" Style="{StaticResource SecondaryTextStyle}"
@@ -101,8 +106,8 @@
         <!-- ==================== MAIN CONTENT ==================== -->
         <Grid Grid.Row="1" Margin="16,12">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="420"/>
-                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="400" MinWidth="280"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -110,7 +115,7 @@
             <ScrollViewer Grid.Column="0"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled"
-                          Padding="0,0,4,0">
+                          Padding="0,0,6,0">
                 <StackPanel>
 
                     <!-- Info Card -->
@@ -302,6 +307,10 @@
 
                 </StackPanel>
             </ScrollViewer>
+
+            <!-- ========== GRID SPLITTER ========== -->
+            <GridSplitter Grid.Column="1"
+                          Style="{StaticResource ModernGridSplitterStyle}"/>
 
             <!-- ========== RIGHT PANEL ========== -->
             <Grid Grid.Column="2">

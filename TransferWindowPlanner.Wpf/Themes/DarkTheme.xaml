@@ -678,6 +678,102 @@
         <Setter Property="FontFamily" Value="{StaticResource PrimaryFont}"/>
     </Style>
 
+    <!-- ===== Horizontal ScrollBar template (must be before HeaderScrollViewerStyle) ===== -->
+    <ControlTemplate x:Key="HorizontalScrollBarTemplate" TargetType="ScrollBar">
+        <Grid Background="{TemplateBinding Background}">
+            <Track x:Name="PART_Track">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Visibility="Collapsed"/>
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Visibility="Collapsed"/>
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Background="{StaticResource ScrollBarThumbBrush}"
+                           BorderThickness="0"
+                           Margin="0,1"/>
+                </Track.Thumb>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <!-- ===== GridSplitter ===== -->
+    <Style x:Key="ModernGridSplitterStyle" TargetType="GridSplitter">
+        <Setter Property="Width" Value="6"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridSplitter">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Rectangle x:Name="IndicatorLine"
+                                   Width="3"
+                                   Height="32"
+                                   Fill="{StaticResource TextMutedBrush}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Opacity="0.4"
+                                   RadiusX="1.5"
+                                   RadiusY="1.5"/>
+                        <Border x:Name="HoverBackground"
+                                Background="Transparent"
+                                IsHitTestVisible="False"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HoverBackground"
+                                    Property="Background"
+                                    Value="{StaticResource AccentPrimaryBrush}"/>
+                            <Setter TargetName="HoverBackground"
+                                    Property="Opacity"
+                                    Value="0.15"/>
+                            <Setter TargetName="IndicatorLine"
+                                    Property="Fill"
+                                    Value="{StaticResource AccentPrimaryBrush}"/>
+                            <Setter TargetName="IndicatorLine"
+                                    Property="Opacity"
+                                    Value="0.8"/>
+                            <Setter TargetName="IndicatorLine"
+                                    Property="Width"
+                                    Value="4"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="HeaderScrollViewerStyle" TargetType="ScrollViewer">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid>
+                        <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
+                                                CanContentScroll="False"
+                                                Margin="{TemplateBinding Padding}"/>
+                        <ScrollBar x:Name="PART_HorizontalScrollBar"
+                                   Orientation="Horizontal"
+                                   Height="5"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Bottom"
+                                   Background="{StaticResource ScrollBarTrackBrush}"
+                                   Template="{StaticResource HorizontalScrollBarTemplate}"
+                                   Visibility="Collapsed"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_HorizontalScrollBar"
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- ===== ListBox ===== -->
     <Style TargetType="ListBox">
         <Setter Property="Background" Value="{StaticResource CardBrush}"/>

@@ -10,6 +10,25 @@ internal enum UiLanguage
 
 internal static class UiTextCatalog
 {
+    private static readonly Dictionary<string, string> PlanetRu = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["Mercury"] = "Меркурий",
+        ["Venus"] = "Венера",
+        ["Earth"] = "Земля",
+        ["Mars"] = "Марс",
+        ["Jupiter"] = "Юпитер",
+        ["Saturn"] = "Сатурн",
+        ["Uranus"] = "Уран",
+        ["Neptune"] = "Нептун",
+    };
+
+    public static string PlanetName(string englishName, UiLanguage language)
+    {
+        if (language == UiLanguage.Russian && englishName != null && PlanetRu.TryGetValue(englishName, out var ru))
+            return ru;
+        return englishName ?? "";
+    }
+
     private static readonly IReadOnlyDictionary<string, string> English = new Dictionary<string, string>
     {
         ["app.title"] = "Solar System Transfer Planner",
@@ -163,6 +182,7 @@ internal static class UiTextCatalog
         ["launch.node_ascending"] = "ascending",
         ["launch.node_descending"] = "descending",
         ["launch.deg_inertial"] = "deg inertial",
+        ["visual.solar.show_all"] = "Show all planets",
         ["visual.solar.at_departure"] = "at departure",
         ["visual.solar.at_arrival"] = "at arrival",
         ["visual.solar.all_planets_note"] = "All planets shown; non-essential bodies are dimmed.",
@@ -372,6 +392,7 @@ internal static class UiTextCatalog
         ["launch.node_ascending"] = "восходящий",
         ["launch.node_descending"] = "нисходящий",
         ["launch.deg_inertial"] = "° инерц.",
+        ["visual.solar.show_all"] = "Показать все планеты",
         ["visual.solar.at_departure"] = "на старте",
         ["visual.solar.at_arrival"] = "на прилёте",
         ["visual.solar.all_planets_note"] = "Показаны все планеты; второстепенные тела затемнены.",

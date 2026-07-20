@@ -173,7 +173,7 @@
                     </Border>
                 </StackPanel>
             </ScrollViewer>
-            <GridSplitter Grid.Column="1" Width="4" Background="#3E3E42" HorizontalAlignment="Stretch"/>
+            <GridSplitter Grid.Column="1" Style="{StaticResource ModernGridSplitterStyle}"/>
             <Grid Grid.Column="2">
                 <TabControl Background="#1E1E1E" BorderThickness="0">
                     <TabItem Header="Best design" Background="#2D2D30" Foreground="#D4D4D4">

@@ -63,7 +63,7 @@ public partial class RocketBuilderWindow : Window
         combo.Items.Clear();
         combo.Items.Add(new ChoiceItem("", L("(optional)", "(необязательно)")));
         foreach (var p in Core.SolarSystemCatalog.PlanetNames)
-            combo.Items.Add(new ChoiceItem(p, p));
+            combo.Items.Add(new ChoiceItem(p, UiTextCatalog.PlanetName(p, _language)));
         combo.SelectedIndex = 0;
     }
 
